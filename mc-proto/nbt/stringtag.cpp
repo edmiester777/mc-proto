@@ -15,6 +15,9 @@ minecraft::NBTStringTag::NBTStringTag(istream& stream)
     // strings from NBT streams are not null-termintated. We must construct
     // it with an exact size.
     m_value = string(rawstr, lengthTag.value());
+
+    // cleanup
+    delete[] rawstr;
 }
 
 minecraft::NBTStringTag::NBTStringTag(string value)
