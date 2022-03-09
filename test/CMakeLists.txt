@@ -10,6 +10,7 @@ set (NBT_TEST_FILES
     "nbt/floattag.cpp"
     "nbt/doubletag.cpp"
     "nbt/stringtag.cpp"
+    "nbt/bytearraytag.cpp"
     "nbt/intarraytag.cpp"
     "nbt/longarraytag.cpp"
 )

@@ -3,7 +3,7 @@
 Implementation of NBT in C++. Right now I am focused on Java edition as bedrock seems
 to have a few different cases that I will not spend time implementing for now.
 
-## TODO Types
+## Supported types
 - [x] Byte
 - [x] Short
 - [x] Int
@@ -13,6 +13,6 @@ to have a few different cases that I will not spend time implementing for now.
 - [x] String
 - [ ] List
 - [ ] Compound
-- [ ] Byte Array
+- [x] Byte Array
 - [x] Int Array
 - [x] Long Array
