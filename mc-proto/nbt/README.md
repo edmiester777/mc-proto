@@ -9,7 +9,7 @@ to have a few different cases that I will not spend time implementing for now.
 - [x] Int
 - [x] Long
 - [x] Float
-- [ ] Double
+- [x] Double
 - [ ] String
 - [ ] List
 - [ ] Compound
