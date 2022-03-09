@@ -5,7 +5,9 @@ enable_testing()
 set (NBT_TEST_FILES
     "nbt/bytetag.cpp"
     "nbt/shorttag.cpp"
-    "nbt/inttag.cpp")
+    "nbt/inttag.cpp"
+    "nbt/longtag.cpp"
+)
 add_executable (nbttest ${NBT_TEST_FILES})
 target_link_libraries(nbttest 
     mc-proto 

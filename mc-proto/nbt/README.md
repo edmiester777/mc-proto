@@ -7,7 +7,7 @@ to have a few different cases that I will not spend time implementing for now.
 - [x] Byte
 - [x] Short
 - [x] Int
-- [ ] Long
+- [x] Long
 - [ ] Float
 - [ ] Double
 - [ ] String

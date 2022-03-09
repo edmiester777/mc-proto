@@ -16,7 +16,7 @@
 
 #if WIN32
 
-#include <winsock.h>
+#include <WinSock2.h>
 
 #else
 
