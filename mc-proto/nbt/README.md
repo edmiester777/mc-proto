@@ -15,5 +15,4 @@ to have a few different cases that I will not spend time implementing for now.
 - [ ] Compound
 - [ ] Byte Array
 - [x] Int Array
-- [ ] Long Array
-- [ ] Boolean
+- [x] Long Array
