@@ -18,8 +18,6 @@ namespace minecraft
         float value() const;
 
         virtual NBTTagTypes type() const override;
-
-    protected:
         virtual void write_data(ostream& stream) const override;
 
     private:

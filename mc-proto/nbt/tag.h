@@ -27,8 +27,6 @@ namespace minecraft
     public:
         virtual NBTTagTypes type() const = 0;
         void write(ostream& stream) const;
-
-    protected:
         virtual void write_data(ostream& stream) const = 0;
     };
 }

@@ -17,8 +17,6 @@ namespace minecraft
         size_t size() const;
 
         virtual NBTTagTypes type() const override;
-
-    protected:
         virtual void write_data(ostream& stream) const override;
 
     private:

@@ -49,12 +49,10 @@ NBTTagTypes minecraft::NBTIntArrayTag::type() const
 
 void minecraft::NBTIntArrayTag::write_data(ostream& stream) const
 {
-    int32_t size = htonl(m_value.size());
-    stream.write((char*)&size, sizeof(int32_t));
+    NBTIntTag(size()).write_data(stream);
 
     for (int i = 0; i < m_value.size(); ++i)
     {
-        int32_t val = htonl(m_value[i]);
-        stream.write((char*)&val, sizeof(int32_t));
+        NBTIntTag(m_value[i]).write_data(stream);
     }
 }
