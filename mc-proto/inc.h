@@ -13,6 +13,7 @@
 #include <memory>
 #include <map>
 #include <variant>
+#include <vector>
 
 #if WIN32
 

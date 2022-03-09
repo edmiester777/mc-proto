@@ -14,6 +14,6 @@ to have a few different cases that I will not spend time implementing for now.
 - [ ] List
 - [ ] Compound
 - [ ] Byte Array
-- [ ] Int Array
+- [x] Int Array
 - [ ] Long Array
 - [ ] Boolean
