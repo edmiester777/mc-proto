@@ -12,4 +12,4 @@
 #include <ostream>
 #include <memory>
 #include <map>
-#include <nbt.hpp>
+#include <variant>

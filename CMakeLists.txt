@@ -27,6 +27,7 @@ include_directories(
 # Include sub-projects.
 add_subdirectory ("third-party/glog")
 add_subdirectory ("third-party/socketpp")
+add_subdirectory ("third-party/zlib")
 
 
 include_directories(
