@@ -32,10 +32,13 @@ int64_t minecraft::NBTLongTag::value() const
     return m_value;
 }
 
-void minecraft::NBTLongTag::write(ostream& stream) const
+void minecraft::NBTLongTag::write_data(ostream& stream) const
 {
-    uint8_t tagType = NBTTagTypes::TAG_LONG;
     int64_t networkValue = htonll(m_value);
-    stream.write((char*)&tagType, sizeof(uint8_t));
     stream.write((char*)&networkValue, sizeof(int64_t));
+}
+
+NBTTagTypes minecraft::NBTLongTag::type() const
+{
+    return NBTTagTypes::TAG_LONG;
 }

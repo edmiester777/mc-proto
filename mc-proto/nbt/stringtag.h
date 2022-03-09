@@ -15,7 +15,10 @@ namespace minecraft
 
         string& value();
 
-        virtual void write(ostream& stream) const override;
+        virtual NBTTagTypes type() const override;
+
+    protected:
+        virtual void write_data(ostream& stream) const override;
 
     private:
         string m_value;

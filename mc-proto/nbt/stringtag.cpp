@@ -40,11 +40,14 @@ string& minecraft::NBTStringTag::value()
     return m_value;
 }
 
-void minecraft::NBTStringTag::write(ostream& stream) const
+void minecraft::NBTStringTag::write_data(ostream& stream) const
 {
-    uint8_t tagType = NBTTagTypes::TAG_STRING;
     uint16_t length = htons(m_value.length());
-    stream.write((char*)&tagType, sizeof(uint8_t));
     stream.write((char*)&length, sizeof(uint16_t));
     stream.write(m_value.c_str(), m_value.length());
+}
+
+NBTTagTypes minecraft::NBTStringTag::type() const
+{
+    return NBTTagTypes::TAG_STRING;
 }

@@ -17,7 +17,10 @@ namespace minecraft
 
         double value() const;
 
-        virtual void write(ostream& stream) const override;
+        virtual NBTTagTypes type() const override;        
+
+    protected:
+        virtual void write_data(ostream& stream) const override;
 
     private:
         double m_value;

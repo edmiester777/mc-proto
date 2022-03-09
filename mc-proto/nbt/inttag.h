@@ -6,7 +6,7 @@ namespace minecraft
 {
     using namespace std;
 
-    class NBTIntTag : NBTTagBase
+    class NBTIntTag : public NBTTagBase
     {
     public:
         NBTIntTag(istream& stream);
@@ -16,7 +16,10 @@ namespace minecraft
 
         int32_t value();
 
-        virtual void write(ostream& stream) const override;
+        virtual NBTTagTypes type() const override;
+
+    protected:
+        virtual void write_data(ostream& stream) const override;
 
     private:
         int32_t m_value;

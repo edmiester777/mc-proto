@@ -32,10 +32,13 @@ float minecraft::NBTFloatTag::value() const
     return m_value;
 }
 
-void minecraft::NBTFloatTag::write(ostream& stream) const
+void minecraft::NBTFloatTag::write_data(ostream& stream) const
 {
-    uint8_t tagType = NBTTagTypes::TAG_FLOAT;
     uint32_t networkValue = htonf(m_value);
-    stream.write((char*)&tagType, sizeof(uint8_t));
     stream.write((char*)&networkValue, sizeof(uint32_t));
+}
+
+NBTTagTypes minecraft::NBTFloatTag::type() const
+{
+    return NBTTagTypes::TAG_FLOAT;
 }

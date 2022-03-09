@@ -32,11 +32,13 @@ double minecraft::NBTDoubleTag::value() const
     return m_value;
 }
 
-void minecraft::NBTDoubleTag::write(ostream& stream) const
+void minecraft::NBTDoubleTag::write_data(ostream& stream) const
 {
-    uint8_t tagType = NBTTagTypes::TAG_DOUBLE;
     uint64_t networkValue = htond(m_value);
-
-    stream.write((char*)&tagType, sizeof(uint8_t));
     stream.write((char*)&networkValue, sizeof(uint64_t));
+}
+
+NBTTagTypes minecraft::NBTDoubleTag::type() const
+{
+    return NBTTagTypes::TAG_DOUBLE;
 }

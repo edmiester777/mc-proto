@@ -25,6 +25,10 @@ namespace minecraft
     class NBTTagBase
     {
     public:
-        virtual void write(ostream& stream) const = 0;
+        virtual NBTTagTypes type() const = 0;
+        void write(ostream& stream) const;
+
+    protected:
+        virtual void write_data(ostream& stream) const = 0;
     };
 }

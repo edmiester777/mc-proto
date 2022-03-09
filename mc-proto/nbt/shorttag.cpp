@@ -32,10 +32,13 @@ int16_t minecraft::NBTShortTag::value() const
     return m_value;
 }
 
-void minecraft::NBTShortTag::write(ostream& stream) const
+void minecraft::NBTShortTag::write_data(ostream& stream) const
 {
-    uint8_t tagType = NBTTagTypes::TAG_SHORT;
-    stream.write((char*)&tagType, sizeof(uint8_t));
     int16_t outVal = htons(m_value);
     stream.write((char*)&outVal, sizeof(int16_t));
+}
+
+NBTTagTypes minecraft::NBTShortTag::type() const
+{
+    return NBTTagTypes::TAG_SHORT;
 }

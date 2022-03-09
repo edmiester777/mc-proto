@@ -1,6 +1,8 @@
 #include "bytetag.h"
 #include "tag.h"
 
+using namespace minecraft;
+
 minecraft::NBTByteTag::NBTByteTag(istream& data)
 {
     // read single byte from stream
@@ -30,9 +32,12 @@ uint8_t minecraft::NBTByteTag::value() const
     return m_byte;
 }
 
-void minecraft::NBTByteTag::write(ostream& stream) const
+void minecraft::NBTByteTag::write_data(ostream& stream) const
 {
-    // write byte with tag prefix to stream
-    uint8_t odata[2] = { NBTTagTypes::TAG_BYTE, m_byte };
-    stream.write((char*)odata, 2);
+    stream.write((char*)&m_byte, sizeof(uint8_t));
+}
+
+NBTTagTypes minecraft::NBTByteTag::type() const
+{
+    return NBTTagTypes::TAG_BYTE;
 }

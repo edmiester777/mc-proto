@@ -16,7 +16,10 @@ namespace minecraft
 
         uint8_t value() const;
         
-        virtual void write(ostream& stream) const override;
+        virtual NBTTagTypes type() const override;
+
+    protected:
+        virtual void write_data(ostream& stream) const override;
 
     private:
         uint8_t m_byte;

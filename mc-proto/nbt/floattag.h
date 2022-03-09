@@ -17,8 +17,10 @@ namespace minecraft
 
         float value() const;
 
-        // Inherited via NBTTagBase
-        virtual void write(ostream& stream) const override;
+        virtual NBTTagTypes type() const override;
+
+    protected:
+        virtual void write_data(ostream& stream) const override;
 
     private:
         float m_value;

@@ -1,6 +1,6 @@
 #include "inttag.h"
 
-using namespace std;
+using namespace minecraft;
 
 minecraft::NBTIntTag::NBTIntTag(istream& stream)
 {
@@ -32,10 +32,13 @@ int32_t minecraft::NBTIntTag::value()
     return m_value;
 }
 
-void minecraft::NBTIntTag::write(ostream& stream) const
+void minecraft::NBTIntTag::write_data(ostream& stream) const
 {
-    uint8_t tagType = NBTTagTypes::TAG_INT;
     int32_t networkValue = htonl(m_value);
-    stream.write((char*)&tagType, sizeof(uint8_t));
     stream.write((char*)&networkValue, sizeof(int32_t));
+}
+
+NBTTagTypes minecraft::NBTIntTag::type() const
+{
+    return NBTTagTypes::TAG_INT;
 }
