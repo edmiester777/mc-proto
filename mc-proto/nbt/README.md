@@ -6,7 +6,7 @@ to have a few different cases that I will not spend time implementing for now.
 ## TODO Types
 - [x] Byte
 - [x] Short
-- [ ] Int
+- [x] Int
 - [ ] Long
 - [ ] Float
 - [ ] Double

@@ -10,6 +10,7 @@ add_library (mc-proto STATIC
     "nbt/compoundtag.cpp"
     "nbt/bytetag.cpp"
     "nbt/shorttag.cpp"
+    "nbt/inttag.cpp"
 
     "uncompressedpacketreader.cpp"
     "packets/packetobject.cpp"
