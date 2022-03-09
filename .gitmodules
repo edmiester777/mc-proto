@@ -1,9 +1,9 @@
-[submodule "third-party/cpp-nbt"]
-	path = third-party/cpp-nbt
-	url = https://github.com/SpockBotMC/cpp-nbt.git
 [submodule "third-party/socketpp"]
 	path = third-party/socketpp
 	url = https://github.com/fpagliughi/sockpp.git
 [submodule "third-party/glog"]
 	path = third-party/glog
 	url = https://github.com/google/glog.git
+[submodule "third-party/zlib"]
+	path = third-party/zlib
+	url = https://github.com/madler/zlib.git

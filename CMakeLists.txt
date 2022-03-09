@@ -9,7 +9,7 @@ set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}")
 
 # GoogleTest requires at least C++11
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 23)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -19,6 +19,10 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+
+include_directories(
+    "third-party/cpp-nbt"
+)
 
 # Include sub-projects.
 add_subdirectory ("third-party/glog")
