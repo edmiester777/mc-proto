@@ -11,7 +11,7 @@ to have a few different cases that I will not spend time implementing for now.
 - [x] Float
 - [x] Double
 - [x] String
-- [ ] List
+- [x] List
 - [ ] Compound
 - [x] Byte Array
 - [x] Int Array

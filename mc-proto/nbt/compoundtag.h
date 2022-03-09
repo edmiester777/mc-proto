@@ -1,24 +1,25 @@
 #pragma once
 
-#include "bytetag.h"
+#include "../inc.h"
+#include "tag.h"
 
 namespace minecraft
 {
     using namespace std;
 
-    class NBTCompoundTag;
-    typedef variant<NBTCompoundTag, NBTByteTag> NBTTag;
-
-    class NBTCompoundTag
+    class NBTCompoundTag : public NBTTagBase
     {
     public:
-        NBTCompoundTag(uint8_t* data, size_t len);
-        NBTCompoundTag(const map<string, NBTTag> s);
+        NBTCompoundTag(istream& stream);
+        NBTCompoundTag(const map<string, shared_ptr<NBTTagBase>> s);
 
         NBTCompoundTag& operator=(const NBTCompoundTag& other);
-        NBTCompoundTag& operator=(const map<string, NBTTag>& children);
-        NBTTag& operator[](const string& key);
+        NBTCompoundTag& operator=(const map<string, shared_ptr<NBTTagBase>>& children);
+        shared_ptr<NBTTagBase>& operator[](const string& key);
 
         bool contains(const string& key);
+
+        virtual NBTTagTypes type() const override;
+        virtual void write_data(ostream& stream) const override;
     };
 }

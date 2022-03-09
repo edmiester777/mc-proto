@@ -19,6 +19,7 @@ add_library (mc-proto STATIC
     "nbt/bytearraytag.cpp"
     "nbt/intarraytag.cpp"
     "nbt/longarraytag.cpp"
+    "nbt/listtag.cpp"
 
     "uncompressedpacketreader.cpp"
     "packets/packetobject.cpp"

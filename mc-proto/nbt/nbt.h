@@ -1,4 +1,15 @@
 #pragma once
 
 #include "tag.h"
+#include "bytearraytag.h"
+#include "bytetag.h"
 #include "compoundtag.h"
+#include "doubletag.h"
+#include "floattag.h"
+#include "intarraytag.h"
+#include "inttag.h"
+#include "listtag.h"
+#include "longarraytag.h"
+#include "longtag.h"
+#include "shorttag.h"
+#include "stringtag.h"

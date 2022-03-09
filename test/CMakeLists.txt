@@ -13,6 +13,7 @@ set (NBT_TEST_FILES
     "nbt/bytearraytag.cpp"
     "nbt/intarraytag.cpp"
     "nbt/longarraytag.cpp"
+    "nbt/listtag.cpp"
 )
 add_executable (nbttest ${NBT_TEST_FILES})
 target_link_libraries(nbttest 
