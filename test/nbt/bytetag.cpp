@@ -29,7 +29,6 @@ TEST(NBTByteTag, WriteToStream)
 
     uint8_t readBytes[2];
     stream.read((char*)readBytes, 2);
-    stream.seekg(stream.beg);
 
     EXPECT_TRUE(memcmp(expectedBytes, readBytes, 2) == 0);
 }

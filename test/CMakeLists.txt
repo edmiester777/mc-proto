@@ -3,7 +3,8 @@ cmake_minimum_required (VERSION 3.8)
 enable_testing()
 
 set (NBT_TEST_FILES
-    "nbt/bytetag.cpp")
+    "nbt/bytetag.cpp"
+    "nbt/shorttag.cpp")
 add_executable (nbttest ${NBT_TEST_FILES})
 target_link_libraries(nbttest 
     mc-proto 

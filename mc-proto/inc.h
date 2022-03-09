@@ -13,3 +13,13 @@
 #include <memory>
 #include <map>
 #include <variant>
+
+#if WIN32
+
+#include <winsock.h>
+
+#else
+
+#include <arpa/inet.h>
+
+#endif
