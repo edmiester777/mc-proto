@@ -8,7 +8,7 @@ to have a few different cases that I will not spend time implementing for now.
 - [x] Short
 - [x] Int
 - [x] Long
-- [ ] Float
+- [x] Float
 - [ ] Double
 - [ ] String
 - [ ] List
