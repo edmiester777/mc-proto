@@ -1,11 +1,12 @@
 #pragma once
 
 #include "../inc.h"
+#include "tag.h"
 
 namespace minecraft
 {
     using namespace std;
-    class NBTByteTag
+    class NBTByteTag : public NBTTagBase
     {
     public:
         NBTByteTag(istream& data);
@@ -13,7 +14,7 @@ namespace minecraft
 
         uint8_t value() const;
         
-        void write(ostream& stream);
+        virtual void write(ostream& stream) const override;
 
     private:
         uint8_t m_byte;

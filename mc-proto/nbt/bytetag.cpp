@@ -17,7 +17,7 @@ uint8_t minecraft::NBTByteTag::value() const
     return m_byte;
 }
 
-void minecraft::NBTByteTag::write(ostream& stream)
+void minecraft::NBTByteTag::write(ostream& stream) const
 {
     // write byte with tag prefix to stream
     uint8_t odata[2] = { NBTTagTypes::TAG_BYTE, m_byte };

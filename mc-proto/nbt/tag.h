@@ -21,4 +21,10 @@ namespace minecraft
         TAG_INT_ARRAY = 11,
         TAG_LONG_ARRAY = 12,
     };
+
+    class NBTTagBase
+    {
+    public:
+        virtual void write(ostream& stream) const = 0;
+    };
 }
