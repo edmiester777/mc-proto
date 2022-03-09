@@ -10,7 +10,7 @@ to have a few different cases that I will not spend time implementing for now.
 - [x] Long
 - [x] Float
 - [x] Double
-- [ ] String
+- [x] String
 - [ ] List
 - [ ] Compound
 - [ ] Byte Array
