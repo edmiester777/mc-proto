@@ -14,6 +14,19 @@ minecraft::NBTIntTag::NBTIntTag(int val)
     m_value = val;
 }
 
+void minecraft::NBTIntTag::operator=(const NBTIntTag& other)
+{
+    if (this != &other)
+    {
+        m_value = other.m_value;
+    }
+}
+
+void minecraft::NBTIntTag::operator=(int32_t value)
+{
+    m_value = value;
+}
+
 int32_t minecraft::NBTIntTag::value()
 {
     return m_value;

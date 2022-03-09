@@ -12,6 +12,8 @@ namespace minecraft
     public:
         NBTShortTag(istream& stream);
         NBTShortTag(int16_t val);
+        void operator=(const NBTShortTag& other);
+        void operator=(int16_t value);
 
         int16_t value() const;
 

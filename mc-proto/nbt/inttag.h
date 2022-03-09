@@ -11,6 +11,8 @@ namespace minecraft
     public:
         NBTIntTag(istream& stream);
         NBTIntTag(int val);
+        void operator=(const NBTIntTag& other);
+        void operator=(int32_t value);
 
         int32_t value();
 

@@ -11,6 +11,8 @@ namespace minecraft
     public:
         NBTByteTag(istream& data);
         NBTByteTag(uint8_t value);
+        void operator=(const NBTByteTag& other);
+        void operator=(uint8_t value);
 
         uint8_t value() const;
         

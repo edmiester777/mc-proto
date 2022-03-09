@@ -12,6 +12,19 @@ minecraft::NBTByteTag::NBTByteTag(uint8_t value)
     m_byte = value;
 }
 
+void minecraft::NBTByteTag::operator=(const NBTByteTag& other)
+{
+    if (this != &other)
+    {
+        m_byte = other.m_byte;
+    }
+}
+
+void minecraft::NBTByteTag::operator=(uint8_t value)
+{
+    m_byte = value;
+}
+
 uint8_t minecraft::NBTByteTag::value() const
 {
     return m_byte;
