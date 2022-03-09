@@ -12,7 +12,7 @@ to have a few different cases that I will not spend time implementing for now.
 - [x] Double
 - [x] String
 - [x] List
-- [ ] Compound
+- [x] Compound
 - [x] Byte Array
 - [x] Int Array
 - [x] Long Array
