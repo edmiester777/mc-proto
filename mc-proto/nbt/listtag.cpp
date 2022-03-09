@@ -18,7 +18,7 @@ minecraft::NBTListTag::NBTListTag(istream& stream)
     }
 }
 
-minecraft::NBTListTag::NBTListTag(const NBTTagTypes type, const vector<shared_ptr<NBTTagBase>>& value)
+minecraft::NBTListTag::NBTListTag(const NBTTagTypes type, const vector<NBTTagPtr>& value)
 {
     m_elementType = type;
     m_value = value;
@@ -33,12 +33,12 @@ void minecraft::NBTListTag::operator=(const NBTListTag& other)
     }
 }
 
-shared_ptr<NBTTagBase>& minecraft::NBTListTag::operator[](int index)
+NBTTagPtr& minecraft::NBTListTag::operator[](int index)
 {
     return m_value[index];
 }
 
-vector<shared_ptr<NBTTagBase>>& minecraft::NBTListTag::value()
+vector<NBTTagPtr>& minecraft::NBTListTag::value()
 {
     return m_value;
 }

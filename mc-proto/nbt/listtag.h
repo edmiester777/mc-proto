@@ -11,11 +11,11 @@ namespace minecraft
     {
     public:
         NBTListTag(istream& stream);
-        NBTListTag(const NBTTagTypes type, const vector<shared_ptr<NBTTagBase>>& value);
+        NBTListTag(const NBTTagTypes type, const vector<NBTTagPtr>& value);
         void operator=(const NBTListTag& other);
-        shared_ptr<NBTTagBase>& operator[](int index);
+        NBTTagPtr& operator[](int index);
 
-        vector<shared_ptr<NBTTagBase>>& value();
+        vector<NBTTagPtr>& value();
         size_t size() const;
         NBTTagTypes elementType() const;
         
@@ -27,7 +27,7 @@ namespace minecraft
 
     private:
         NBTTagTypes m_elementType;
-        mutable vector<shared_ptr<NBTTagBase>> m_value;
+        mutable vector<NBTTagPtr> m_value;
     };
 
     template <class T>

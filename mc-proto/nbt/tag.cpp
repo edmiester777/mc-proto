@@ -6,7 +6,7 @@ using namespace minecraft;
 
 #define CHECK_CONSTRUCT_TAG_TYPE(tagtype, clstype, stream) \
     case tagtype: \
-        return shared_ptr<NBTTagBase>(new clstype(stream)); \
+        return NBTTagPtr(new clstype(stream)); \
         break;
 
 void minecraft::NBTTagBase::write(ostream& stream) const
@@ -19,7 +19,7 @@ void minecraft::NBTTagBase::write(ostream& stream) const
     this->write_data(stream);
 }
 
-shared_ptr<NBTTagBase> minecraft::read_nbt_from_stream(istream& stream)
+NBTTagPtr minecraft::read_nbt_from_stream(istream& stream)
 {
     // each tag is prefixed with a type. figure out which type it is
     uint8_t tagType;
@@ -29,7 +29,7 @@ shared_ptr<NBTTagBase> minecraft::read_nbt_from_stream(istream& stream)
     return read_nbt_from_stream_with_type((NBTTagTypes)tagType, stream);
 }
 
-shared_ptr<NBTTagBase> minecraft::read_nbt_from_stream_with_type(NBTTagTypes type, istream& stream)
+NBTTagPtr minecraft::read_nbt_from_stream_with_type(NBTTagTypes type, istream& stream)
 {
     switch (type)
     {

@@ -30,14 +30,16 @@ namespace minecraft
         virtual void write_data(ostream& stream) const = 0;
     };
 
+    typedef shared_ptr<NBTTagBase> NBTTagPtr;
+
     /**
      * Read a generic NBT from a stream. This includes loading the initial type
      * byte.
      */
-    shared_ptr<NBTTagBase> read_nbt_from_stream(istream& stream);
+    NBTTagPtr read_nbt_from_stream(istream& stream);
 
     /**
      * Given a type, construct a generic NBT from a stream.
      */
-    shared_ptr<NBTTagBase> read_nbt_from_stream_with_type(NBTTagTypes type, istream& stream);
+    NBTTagPtr read_nbt_from_stream_with_type(NBTTagTypes type, istream& stream);
 }
