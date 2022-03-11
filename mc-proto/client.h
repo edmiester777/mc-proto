@@ -3,7 +3,6 @@
 #include <string>
 #include <mutex>
 #include <sockpp/tcp_connector.h>
-#include "uncompressedpacketreader.h"
 
 namespace minecraft
 {
@@ -40,6 +39,5 @@ namespace minecraft
         mutex m_mutex;
         uint64_t m_numPacketsSent;
         uint64_t m_numPacketsReceived;
-        UncompressedPacketReader m_uncompressedPacketReader;
     };
 }

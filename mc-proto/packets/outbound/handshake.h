@@ -1,10 +1,9 @@
 #pragma once
 
-#include "../packetobject.h"
-
+#include "../packet.h"
 namespace minecraft
 {
-    class OutboundHandshakePacket : public PacketObject
+    class OutboundHandshakePacket : public Packet
     {
 
     };

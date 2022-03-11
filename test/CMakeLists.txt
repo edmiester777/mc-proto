@@ -15,6 +15,7 @@ set (NBT_TEST_FILES
     "nbt/longarraytag.cpp"
     "nbt/listtag.cpp"
     "nbt/compoundtag.cpp"
+    "nbt/nbt.cpp"
 )
 add_executable (nbttest ${NBT_TEST_FILES})
 target_link_libraries(nbttest 
@@ -35,7 +36,8 @@ target_link_libraries (alltests
     gtest)
 
 set(EXE_COMPILE_DEFINITIONS
-    -DWIN32_LEAN_AND_MEAN)
+    -DWIN32_LEAN_AND_MEAN
+    -D_CMAKE_PROJECT_PATH="${CMAKE_SOURCE_DIR}")
 
 if (WIN32)
     target_compile_definitions(connect PUBLIC ${EXE_COMPILE_DEFINITIONS})

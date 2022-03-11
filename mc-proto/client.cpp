@@ -51,20 +51,20 @@ bool minecraft::Client::connect()
 
 void minecraft::Client::run()
 {
-    while (true)
-    {
-        LOG(INFO) << "Attempting to read packet...";
-        m_mutex.lock();
-        bool err;
-        m_uncompressedPacketReader.readPacket((sockpp::stream_socket&)m_connector, err);
+    //while (true)
+    //{
+    //    LOG(INFO) << "Attempting to read packet...";
+    //    m_mutex.lock();
+    //    bool err;
+    //    m_uncompressedPacketReader.readPacket((sockpp::stream_socket&)m_connector, err);
 
-        bool connected = m_connector.is_open();
-        m_mutex.unlock();
+    //    bool connected = m_connector.is_open();
+    //    m_mutex.unlock();
 
-        if (!connected)
-            break;
-    }
+    //    if (!connected)
+    //        break;
+    //}
 
-    LOG(INFO)
-        << "Connection to " << m_connector.address() << " has been broken.";
+    //LOG(INFO)
+    //    << "Connection to " << m_connector.address() << " has been broken.";
 }

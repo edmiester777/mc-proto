@@ -8,8 +8,8 @@
 #define VLOG_ERROR 4
 #define VLOG_FATAL 5
 
-#include <istream>
-#include <ostream>
+#include <iostream>
+#include <sstream>
 #include <memory>
 #include <map>
 #include <variant>
@@ -24,3 +24,5 @@
 #include <arpa/inet.h>
 
 #endif
+
+typedef std::vector<std::uint8_t> safebytebuffer;

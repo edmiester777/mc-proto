@@ -33,6 +33,8 @@ add_subdirectory ("third-party/zlib")
 include_directories(
     "."
     "third-party/socketpp/include"
+    "third-party/zlib"
+    "${CMAKE_BINARY_DIR}/third-party/zlib"
 )
 
 add_subdirectory ("mc-proto")
