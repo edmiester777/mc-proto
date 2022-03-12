@@ -5,7 +5,7 @@
 
 namespace minecraft
 {
-    enum States
+    enum class States
     {
         HANDSHAKING,
         STATUS,
@@ -13,8 +13,8 @@ namespace minecraft
         PLAY,
     };
 
-    enum HandshakingPacketIDs
+    enum class HandshakingPacketIDs
     {
-        S_HANDSHAKE = 0x00
+        O_HANDSHAKE = 0x00
     };
 }

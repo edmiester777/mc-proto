@@ -4,6 +4,7 @@
 cmake_minimum_required (VERSION 3.8)
 
 add_library (mc-proto STATIC
+    "safebytebuffer.cpp"
     "client.cpp" 
     "compressionhelper.cpp"
     "packetreader.cpp" 

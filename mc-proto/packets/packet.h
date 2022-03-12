@@ -8,15 +8,14 @@ namespace minecraft
     class Packet
     {
     public:
-        Packet(safebytebuffer buffer, size_t len) { }
+        Packet() { }
+        Packet(safebytebuffer& buffer) { }
 
-        virtual int id() const;
+        virtual int id() const = 0;
         
-        virtual safebytebuffer serializeData(size_t& bufferSize);
-        virtual safebytebuffer serializeDataCompressed(size_t& bufferSize);
+        safebytebuffer serialize() const;
 
-    private:
-        int m_id;
-        NBTTagPtr m_data;
+    protected:
+        virtual void serialize_data(safebytebuffer& buf) const = 0;
     };
 }

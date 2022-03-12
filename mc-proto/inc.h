@@ -1,6 +1,6 @@
 #pragma once
 
-#define NBT_MAP_TYPE std::map
+#define MC_PROTOCOL_VERSION 758
 
 #define VLOG_DEBUG 1
 #define VLOG_INFO 2
@@ -14,6 +14,7 @@
 #include <map>
 #include <variant>
 #include <vector>
+#include "safebytebuffer.h"
 
 #if WIN32
 
@@ -24,5 +25,3 @@
 #include <arpa/inet.h>
 
 #endif
-
-typedef std::vector<std::uint8_t> safebytebuffer;

@@ -1,5 +1,6 @@
 #include "client.h"
 #include <glog/logging.h>
+#include "packets/outbound/handshake.h"
 
 minecraft::Client::Client(string host, int16_t port)
 {
@@ -41,6 +42,11 @@ bool minecraft::Client::connect()
 
         return false;
     }
+
+    LOG(INFO) << "Sending handshake packet...";
+    OutboundHandshakePacket handshake(m_host, m_port, States::STATUS);
+    safebytebuffer handshakebuf = handshake.serialize();
+    m_connector.write_n(handshakebuf.data(), handshakebuf.size());
 
     LOG(INFO)
         << "Created connection to "

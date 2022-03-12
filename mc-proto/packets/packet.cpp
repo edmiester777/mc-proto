@@ -1,32 +1,21 @@
 #include "packet.h"
+#include <glog/logging.h>
 
 using namespace std;
 using namespace minecraft;
 
-int minecraft::Packet::id() const
+safebytebuffer minecraft::Packet::serialize() const
 {
-    return m_id;
-}
+    // we take care of writing the packetid, but the rest should be handled
+    // in child implementations of ::serialize_data
+    safebytebuffer buf;
+    buf.writeVarInt(id());
 
-safebytebuffer minecraft::Packet::serializeData(size_t& bufferSize)
-{
-    if (!m_data)
-        return safebytebuffer();
-
-    stringstream stream;
-    m_data->write(stream);
-    
-    // getting size of payload
-    stream.seekg(stream.end);
-    int length = stream.peek();
-    stream.seekg(stream.beg);
-
-    safebytebuffer buf(new uint8_t[length]);
-    stream.read((char*)buf.get(), length);
+    serialize_data(buf);
     return buf;
 }
 
-safebytebuffer minecraft::Packet::serializeDataCompressed(size_t& bufferSize)
+void minecraft::Packet::serialize_data(safebytebuffer& buf) const
 {
-    return safebytebuffer();
+    throw E_NOTIMPL;
 }
