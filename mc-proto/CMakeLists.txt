@@ -24,7 +24,9 @@ add_library (mc-proto STATIC
     "nbt/listtag.cpp"
 
     "packets/packet.cpp"
-    "packets/outbound/handshake.cpp")
+    "packets/outbound/handshake.cpp"
+    "packets/outbound/status.cpp"
+)
 target_link_libraries(mc-proto
     "sockpp-static"
     glog::glog

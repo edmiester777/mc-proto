@@ -1,6 +1,7 @@
 #include "client.h"
 #include <glog/logging.h>
 #include "packets/outbound/handshake.h"
+#include "packets/outbound/status.h"
 
 minecraft::Client::Client(string host, int16_t port)
 {
@@ -15,17 +16,17 @@ minecraft::Client::~Client()
 
 uint64_t minecraft::Client::getNumPacketsSent()
 {
-    m_mutex.lock();
+    m_mainMutex.lock();
     uint64_t packets = m_numPacketsSent;
-    m_mutex.unlock();
+    m_mainMutex.unlock();
     return packets;
 }
 
 uint64_t minecraft::Client::getNumPacketsReceived()
 {
-    m_mutex.lock();
+    m_mainMutex.lock();
     uint64_t packets = m_numPacketsReceived;
-    m_mutex.unlock();
+    m_mainMutex.unlock();
     return packets;
 }
 
@@ -45,8 +46,11 @@ bool minecraft::Client::connect()
 
     LOG(INFO) << "Sending handshake packet...";
     OutboundHandshakePacket handshake(m_host, m_port, States::STATUS);
-    safebytebuffer handshakebuf = handshake.serialize();
-    m_connector.write_n(handshakebuf.data(), handshakebuf.size());
+    VLOG(VLOG_DEBUG) << handshake;
+    write_packet(handshake);
+    LOG(INFO) << "Sending status packet...";
+    OutboundStatusPacket status;
+    VLOG(VLOG_DEBUG) << status;
 
     LOG(INFO)
         << "Created connection to "
@@ -57,20 +61,45 @@ bool minecraft::Client::connect()
 
 void minecraft::Client::run()
 {
-    //while (true)
-    //{
-    //    LOG(INFO) << "Attempting to read packet...";
-    //    m_mutex.lock();
-    //    bool err;
-    //    m_uncompressedPacketReader.readPacket((sockpp::stream_socket&)m_connector, err);
+    while (true)
+    {
+        //LOG(INFO) << "Attempting to read packet...";
+        m_mainMutex.lock();
+        bool err;
 
-    //    bool connected = m_connector.is_open();
-    //    m_mutex.unlock();
+        bool connected = m_connector.is_open();
+        m_mainMutex.unlock();
 
-    //    if (!connected)
-    //        break;
-    //}
+        if (!connected)
+            break;
+    }
 
-    //LOG(INFO)
-    //    << "Connection to " << m_connector.address() << " has been broken.";
+    LOG(INFO)
+        << "Connection to " << m_connector.address() << " has been broken.";
+}
+
+void minecraft::Client::write_packet(const Packet& packet)
+{
+    m_mainMutex.lock();
+    bool connected = m_connector.is_open();
+    m_mainMutex.unlock();
+
+    if (!connected)
+    {
+        LOG(ERROR)
+            << "Attempted to write packet to a disconnected socket: "
+            << packet;
+    }
+
+    lock_guard<mutex> writeLock(m_writeMutex);
+    safebytebuffer buffer = packet.serialize();
+    int written = m_connector.write_n(buffer.data(), buffer.size());
+    if (written != buffer.size())
+    {
+        LOG(ERROR)
+            << "Did not send full buffer for packet ." << endl
+            << "\tbuffer size: " << buffer.size() << endl
+            << "\tsent size  : " << written << endl
+            << "\tpacket     :" << packet;
+    }
 }

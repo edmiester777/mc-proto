@@ -129,7 +129,6 @@ void minecraft::safebytebuffer::writeVarInt(int i)
 
         lval = (value & 0x7F) | 0x80;
         CAST_WRITE_STACK(lval);
-        // Note: >>> means that the sign bit is shifted with the rest of the number rather than being left alone
         value >>= 7;
     }
 

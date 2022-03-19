@@ -43,6 +43,10 @@ if (WIN32)
     target_compile_definitions(connect PUBLIC ${EXE_COMPILE_DEFINITIONS})
     target_compile_definitions(nbttest PUBLIC ${EXE_COMPILE_DEFINITIONS})
     target_compile_definitions(alltests PUBLIC ${EXE_COMPILE_DEFINITIONS})
+
+    set_target_properties(connect PROPERTIES
+        VS_DEBUGGER_COMMAND_ARGUMENTS "--v=1" # enable verbosity
+    )
 endif ()
 
 include(GoogleTest)

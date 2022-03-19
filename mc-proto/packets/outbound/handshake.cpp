@@ -14,16 +14,15 @@ minecraft::OutboundHandshakePacket::OutboundHandshakePacket(string serverAddr, u
     m_nextState = nextState;
 }
 
-int minecraft::OutboundHandshakePacket::id() const
-{
-    return (int)HandshakingPacketIDs::O_HANDSHAKE;
-}
-
-
 void minecraft::OutboundHandshakePacket::serialize_data(safebytebuffer& buf) const
 {
     buf.writeVarInt(MC_PROTOCOL_VERSION);
     buf.write(m_serverAddr);
     buf.write(m_port);
     buf.writeVarInt((int)m_nextState);
+}
+
+std::string minecraft::OutboundHandshakePacket::to_string() const
+{
+    return "empty payload";
 }

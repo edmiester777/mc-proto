@@ -7,6 +7,7 @@ namespace minecraft
 {
     class OutboundHandshakePacket : public Packet
     {
+        PACKET_IMPL(OutboundHandshakePacket, States::HANDSHAKING, HandshakingPacketIDs::O_HANDSHAKE)
     public:
         OutboundHandshakePacket(safebytebuffer buf);
 
@@ -23,8 +24,8 @@ namespace minecraft
             States nextState
         );
 
-        virtual int id() const override;
         virtual void serialize_data(safebytebuffer& buf) const override;
+        virtual std::string to_string() const override;
 
     private:
         string m_serverAddr;

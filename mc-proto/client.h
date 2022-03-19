@@ -7,6 +7,7 @@
 namespace minecraft
 {
     using namespace std;
+    class Packet;
 
     /**
      * Network manager for connecting to a minecraft server. Operations
@@ -31,12 +32,15 @@ namespace minecraft
          * broken.
          */
         void run();
+
+        void write_packet(const Packet& packet);
     private:
         string m_host;
         in_port_t m_port;
         sockpp::socket_initializer m_sockInitializer;
         sockpp::tcp_connector m_connector;
-        mutex m_mutex;
+        mutex m_mainMutex;
+        mutex m_writeMutex;
         uint64_t m_numPacketsSent;
         uint64_t m_numPacketsReceived;
     };

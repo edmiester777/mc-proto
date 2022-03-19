@@ -17,4 +17,10 @@ namespace minecraft
     {
         O_HANDSHAKE = 0x00
     };
+
+    enum class StatusPacketIds
+    {
+        O_STATUS = 0x00,
+        I_STATUS = 0x00
+    };
 }

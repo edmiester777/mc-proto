@@ -8,7 +8,7 @@ int main(int argc, char** argv)
     FLAGS_v = 10;
     FLAGS_logtostdout = true;
     FLAGS_logbuflevel = google::GLOG_INFO;
-    google::InitGoogleLogging("--v=1");
+    google::InitGoogleLogging(argv[0]);
 
     LOG(INFO) << "TEST";
 
