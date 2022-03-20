@@ -1,9 +1,5 @@
 #include "handshake.h"
 
-minecraft::OutboundHandshakePacket::OutboundHandshakePacket(safebytebuffer buf)
-{
-}
-
 minecraft::OutboundHandshakePacket::OutboundHandshakePacket(string serverAddr, uint16_t port, States nextState)
 {
     if (nextState != States::LOGIN && nextState != States::STATUS)
@@ -16,10 +12,10 @@ minecraft::OutboundHandshakePacket::OutboundHandshakePacket(string serverAddr, u
 
 void minecraft::OutboundHandshakePacket::serialize_data(safebytebuffer& buf) const
 {
-    buf.writeVarInt(MC_PROTOCOL_VERSION);
-    buf.write(m_serverAddr);
-    buf.write(m_port);
-    buf.writeVarInt((int)m_nextState);
+    buf.push(varint(MC_PROTOCOL_VERSION));
+    buf.push(m_serverAddr);
+    buf.push(m_port);
+    buf.push(varint((int)m_nextState));
 }
 
 std::string minecraft::OutboundHandshakePacket::to_string() const

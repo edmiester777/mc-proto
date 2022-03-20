@@ -19,7 +19,7 @@ namespace minecraft
 
         friend std::ostream& operator<<(std::ostream& stream, const Packet& packet);
 
-        virtual int id() const = 0;
+        virtual int id() const { return -1; };
         
         safebytebuffer serialize() const;
 
@@ -29,6 +29,6 @@ namespace minecraft
         virtual string to_string() const;
 
     protected:
-        virtual void serialize_data(safebytebuffer& buf) const = 0;
+        virtual void serialize_data(safebytebuffer& buf) const;
     };
 }

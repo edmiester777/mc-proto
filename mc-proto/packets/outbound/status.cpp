@@ -7,10 +7,6 @@ minecraft::OutboundStatusPacket::OutboundStatusPacket()
 {
 }
 
-minecraft::OutboundStatusPacket::OutboundStatusPacket(safebytebuffer& buffer)
-{
-}
-
 void minecraft::OutboundStatusPacket::serialize_data(safebytebuffer& buffer) const
 {
     // no data is sent as a part of this payload.

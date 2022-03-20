@@ -8,6 +8,7 @@ namespace minecraft
 {
     using namespace std;
     class Packet;
+    enum class States;
 
     /**
      * Network manager for connecting to a minecraft server. Operations
@@ -34,7 +35,11 @@ namespace minecraft
         void run();
 
         void write_packet(const Packet& packet);
+
+    protected:
+        void read_packet();
     private:
+        States m_state;
         string m_host;
         in_port_t m_port;
         sockpp::socket_initializer m_sockInitializer;

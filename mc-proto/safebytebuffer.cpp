@@ -1,5 +1,6 @@
 #include "safebytebuffer.h"
 #include "inc.h"
+#include "varint.h"
 #include <streambuf>
 #include <istream>
 #include <sstream>
@@ -10,9 +11,9 @@
 using namespace minecraft;
 using namespace std;
 
-std::ostream& minecraft::safebytebuffer::operator<<(std::ostream& stream) const
+std::ostream& minecraft::operator<<(std::ostream& stream, const safebytebuffer& buf)
 {
-    stream.write((char*)&(*this)[0], size());
+    stream.write((char*)buf.data(), buf.size());
     return stream;
 }
 
@@ -31,7 +32,7 @@ void minecraft::safebytebuffer::push_buffer(std::uint8_t* buf, size_t len)
     }
 
     // copying input buffer to next block location
-    memcpy(data(), buf, len);
+    copy(buf, buf + len, back_inserter(*this));
 }
 
 void minecraft::safebytebuffer::push_stream(std::istream& stream)
@@ -53,85 +54,70 @@ void minecraft::safebytebuffer::push_stream(std::istream& stream)
     delete[] buf;
 }
 
-void minecraft::safebytebuffer::write(bool b)
+void minecraft::safebytebuffer::push(bool b)
 {
-    write((uint8_t)b);
+    push((uint8_t)b);
 }
 
-void minecraft::safebytebuffer::write(uint8_t byte)
+void minecraft::safebytebuffer::push(uint8_t byte)
 {
     CAST_WRITE_STACK(byte);
 }
 
-void minecraft::safebytebuffer::write(int16_t s)
+void minecraft::safebytebuffer::push(int16_t s)
 {
     int16_t networkval = htons(s);
     CAST_WRITE_STACK(networkval);
 }
 
-void minecraft::safebytebuffer::write(uint16_t s)
+void minecraft::safebytebuffer::push(uint16_t s)
 {
-    write((int16_t)s);
+    push((int16_t)s);
 }
 
-void minecraft::safebytebuffer::write(int32_t i)
+void minecraft::safebytebuffer::push(int32_t i)
 {
     int32_t networkval = htonl(i);
     CAST_WRITE_STACK(networkval);
 }
 
-void minecraft::safebytebuffer::write(uint32_t i)
+void minecraft::safebytebuffer::push(uint32_t i)
 {
-    write((int32_t)i);
+    push((int32_t)i);
 }
 
-void minecraft::safebytebuffer::write(int64_t l)
+void minecraft::safebytebuffer::push(int64_t l)
 {
     int64_t networkval = htonll(l);
     CAST_WRITE_STACK(networkval);
 }
 
-void minecraft::safebytebuffer::write(uint64_t l)
+void minecraft::safebytebuffer::push(uint64_t l)
 {
-    write((int64_t)l);
+    push((int64_t)l);
 }
 
-void minecraft::safebytebuffer::write(float f)
+void minecraft::safebytebuffer::push(float f)
 {
     float networkval = htonf(f);
     CAST_WRITE_STACK(networkval);
 }
 
-void minecraft::safebytebuffer::write(double d)
+void minecraft::safebytebuffer::push(double d)
 {
     double networkval = htond(d);
     CAST_WRITE_STACK(networkval);
 }
 
-void minecraft::safebytebuffer::write(string s)
+void minecraft::safebytebuffer::push(string s)
 {
-    push_buffer((uint8_t*)s.c_str(), s.length() + 1);
+    push(varint(s.length()));
+    push_buffer((uint8_t*)s.c_str(), s.length());
 }
 
-void minecraft::safebytebuffer::writeVarInt(int i)
+void minecraft::safebytebuffer::push(varint i)
 {
-    int nbytes = 0;
-    unsigned int value = htonl(i);
-
-    while (true) 
-    {
-        uint8_t lval = value;
-        if ((value & ~0x7F) == 0)
-        {
-            CAST_WRITE_STACK(lval);
-            return;
-        }
-
-        lval = (value & 0x7F) | 0x80;
-        CAST_WRITE_STACK(lval);
-        value >>= 7;
-    }
-
-    VLOG(VLOG_INFO)
-        << "Wrote VarInt in " << nbytes << " byte(s).";
+    i.write([this](uint8_t b) {
+        push_buffer((uint8_t*)&b, 1);
+    });
 }

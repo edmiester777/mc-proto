@@ -4,10 +4,12 @@
 cmake_minimum_required (VERSION 3.8)
 
 add_library (mc-proto STATIC
+    "varint.cpp"
     "safebytebuffer.cpp"
     "client.cpp" 
     "compressionhelper.cpp"
-    "packetreader.cpp" 
+    "packetreader.cpp"
+    "mcstream.cpp"
 
     "nbt/tag.cpp"
     "nbt/compoundtag.cpp"
@@ -24,6 +26,7 @@ add_library (mc-proto STATIC
     "nbt/listtag.cpp"
 
     "packets/packet.cpp"
+    "packets/inbound/status.cpp"
     "packets/outbound/handshake.cpp"
     "packets/outbound/status.cpp"
 )

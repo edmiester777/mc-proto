@@ -19,7 +19,7 @@ safebytebuffer minecraft::Packet::serialize() const
     // we take care of writing the packetid, but the rest should be handled
     // in child implementations of ::serialize_data
     safebytebuffer buf;
-    buf.writeVarInt(id());
+    buf.push(varint(id()));
 
     serialize_data(buf);
     return buf;

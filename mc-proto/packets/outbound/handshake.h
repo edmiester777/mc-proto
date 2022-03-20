@@ -9,8 +9,6 @@ namespace minecraft
     {
         PACKET_IMPL(OutboundHandshakePacket, States::HANDSHAKING, HandshakingPacketIDs::O_HANDSHAKE)
     public:
-        OutboundHandshakePacket(safebytebuffer buf);
-
         /**
          * Construct a client handshake packet with parameters.
          * 

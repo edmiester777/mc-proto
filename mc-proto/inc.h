@@ -12,9 +12,10 @@
 #include <sstream>
 #include <memory>
 #include <map>
-#include <variant>
 #include <vector>
 #include "safebytebuffer.h"
+#include "mcstream.h"
+#include "varint.h"
 
 #if WIN32
 
