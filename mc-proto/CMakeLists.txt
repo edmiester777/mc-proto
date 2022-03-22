@@ -10,6 +10,7 @@ add_library (mc-proto STATIC
     "compressionhelper.cpp"
     "packetreader.cpp"
     "mcstream.cpp"
+    "uuid.cpp"
 
     "nbt/tag.cpp"
     "nbt/compoundtag.cpp"
@@ -27,8 +28,10 @@ add_library (mc-proto STATIC
 
     "packets/packet.cpp"
     "packets/inbound/status.cpp"
+    "packets/inbound/login.cpp"
     "packets/outbound/handshake.cpp"
     "packets/outbound/status.cpp"
+    "packets/outbound/login.cpp"
 )
 target_link_libraries(mc-proto
     "sockpp-static"

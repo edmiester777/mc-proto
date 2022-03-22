@@ -11,6 +11,78 @@
 using namespace minecraft;
 using namespace std;
 
+safebytebuffer& minecraft::safebytebuffer::operator<<(const bool b)
+{
+    push(b);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const uint8_t byte)
+{
+    push(byte);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const int16_t s)
+{
+    push(s);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const uint16_t s)
+{
+    push(s);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const int32_t i)
+{
+    push(i);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const uint32_t i)
+{
+    push(i);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const int64_t l)
+{
+    push(l);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const uint64_t l)
+{
+    push(l);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const float f)
+{
+    push(f);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const double d)
+{
+    push(d);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const string& s)
+{
+    push(s);
+    return *this;
+}
+
+safebytebuffer& minecraft::safebytebuffer::operator<<(const varint& i)
+{
+    push(i);
+    return *this;
+}
+
 std::ostream& minecraft::operator<<(std::ostream& stream, const safebytebuffer& buf)
 {
     stream.write((char*)buf.data(), buf.size());
@@ -109,7 +181,7 @@ void minecraft::safebytebuffer::push(double d)
     CAST_WRITE_STACK(networkval);
 }
 
-void minecraft::safebytebuffer::push(string s)
+void minecraft::safebytebuffer::push(const string& s)
 {
     push(varint(s.length()));
     push_buffer((uint8_t*)s.c_str(), s.length());

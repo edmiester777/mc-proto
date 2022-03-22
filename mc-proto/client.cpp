@@ -1,16 +1,20 @@
 #include "client.h"
 #include <glog/logging.h>
 #include "packets/inbound/status.h"
+#include "packets/inbound/login.h"
 #include "packets/outbound/handshake.h"
 #include "packets/outbound/status.h"
-#include "packets/states.h"
+#include "packets/outbound/login.h"
 
 using namespace minecraft;
 
-minecraft::Client::Client(string host, int16_t port)
+minecraft::Client::Client(string host, int16_t port, shared_ptr<ClientEventListener> listener)
     : m_host(host)
     , m_port(port)
+    , m_listener(listener)
     , m_state(States::HANDSHAKING)
+    , m_numPacketsSent(0)
+    , m_numPacketsReceived(0)
 {
 }
 
@@ -50,19 +54,23 @@ bool minecraft::Client::connect()
     }
 
     LOG(INFO) << "Sending handshake packet...";
-    OutboundHandshakePacket handshake(m_host, m_port, States::STATUS);
+    OutboundHandshakePacket handshake(m_host, m_port, States::LOGIN);
     VLOG(VLOG_DEBUG) << handshake;
     write_packet(handshake);
-    m_state = States::STATUS;
-    LOG(INFO) << "Sending status packet...";
-    OutboundStatusPacket status;
-    VLOG(VLOG_DEBUG) << status;
 
     LOG(INFO)
         << "Created connection to "
         << m_connector.address();
 
     return true;
+}
+
+void minecraft::Client::login(string username)
+{
+    m_mainMutex.lock();
+    m_state = States::LOGIN;
+    m_mainMutex.unlock();
+    write_packet(OutboundLoginPacket(username));
 }
 
 void minecraft::Client::run()
@@ -144,6 +152,7 @@ void minecraft::Client::read_packet()
     buf.reserve(incoming_packet_len.val());
     int recvd = m_connector.read_n(buf.data(), incoming_packet_len.val());
     buf.push_buffer(buf.data(), incoming_packet_len.val());
+    VLOG(VLOG_DEBUG) << "Read packet data in " << incoming_packet_len.val() << " bytes";
 
     if (recvd != incoming_packet_len.val())
     {
@@ -155,14 +164,45 @@ void minecraft::Client::read_packet()
     }
 
     // converting to a stream
+    shared_ptr<Packet> packet = nullptr;
     mcstream stream;
     stream << buf;
 
     // getting packet ID
     varint packetId;
     stream >> packetId;
-    InboundStatusPacket packet(stream);
 
-    VLOG(VLOG_INFO)
-        << "Received packet:" << packet;
+    // logic for packets based on state
+    if (m_state == States::LOGIN)
+    {
+        switch ((LoginPacketIds)packetId.val())
+        {
+        case LoginPacketIds::I_LOGIN_SUCCESS:
+        {
+            shared_ptr<InboundLoginPacket> loginPacket(new InboundLoginPacket(stream));
+            m_listener->OnLoginSuccess(*this, *loginPacket);
+            packet = loginPacket;
+            break;
+        }
+        case LoginPacketIds::I_DISCONNECT:
+            packet = shared_ptr<Packet>(new InboundStatusPacket(stream));
+            break;
+        }
+    }
+
+    if (packet)
+    {
+        VLOG(VLOG_DEBUG)
+            << "Received packet:" << endl
+            << "\tsize: " << incoming_packet_len.val() << endl
+            << "\tstate: " << setw(2) << setfill('0') << (int)m_state << endl
+            << "\tcontent: " << *packet.get();
+    }
+    else
+    {
+        LOG(WARNING)
+            << "Could not read packet with ID "
+            << "0x" << setw(2) << setfill('0') << packetId.val()
+            << "for state 0x" << setw(2) << setfill('0') << (int)m_state;
+    }
 }

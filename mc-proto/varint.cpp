@@ -65,7 +65,7 @@ namespace minecraft
         }
     }
 
-    std::ostream& operator<<(std::ostream& stream, minecraft::varint& i)
+    mcstream& operator<<(mcstream& stream, varint& i)
     {
         i.write([&] (uint8_t b) {
             stream << b;
@@ -73,7 +73,7 @@ namespace minecraft
         return stream;
     }
 
-    std::istream& operator>>(std::istream& stream, minecraft::varint& i)
+    mcstream& operator>>(mcstream& stream, varint& i)
     {
         int val = i.read([&] {
             uint8_t b;

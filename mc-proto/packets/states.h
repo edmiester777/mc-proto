@@ -23,4 +23,14 @@ namespace minecraft
         O_STATUS = 0x00,
         I_STATUS = 0x00
     };
+
+    enum class LoginPacketIds
+    {
+        O_LOGIN_START = 0x00,
+        O_ENCRYPTION_RESPONSE = 0x01,
+
+        I_DISCONNECT = 0x00,
+        I_ENCRYPTION_REQUEST = 0x01,
+        I_LOGIN_SUCCESS = 0x02,
+    };
 }

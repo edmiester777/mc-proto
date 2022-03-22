@@ -2,7 +2,9 @@
 
 #include <string>
 #include <mutex>
+#include <memory>
 #include <sockpp/tcp_connector.h>
+#include "clientlistener.h"
 
 namespace minecraft
 {
@@ -20,13 +22,14 @@ namespace minecraft
     class Client
     {
     public:
-        Client(string host, int16_t port);
+        Client(string host, int16_t port, shared_ptr<ClientEventListener> listener);
         virtual ~Client();
 
         uint64_t getNumPacketsSent();
         uint64_t getNumPacketsReceived();
 
         bool connect();
+        void login(string username);
 
         /**
          * Main connection loop. This will block until connection is
@@ -48,5 +51,6 @@ namespace minecraft
         mutex m_writeMutex;
         uint64_t m_numPacketsSent;
         uint64_t m_numPacketsReceived;
+        shared_ptr<ClientEventListener> m_listener;
     };
 }

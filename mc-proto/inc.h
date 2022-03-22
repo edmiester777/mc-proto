@@ -8,6 +8,8 @@
 #define VLOG_ERROR 4
 #define VLOG_FATAL 5
 
+#define asstr(v) #v
+
 #include <iostream>
 #include <sstream>
 #include <memory>
@@ -16,6 +18,7 @@
 #include "safebytebuffer.h"
 #include "mcstream.h"
 #include "varint.h"
+#include "uuid.h"
 
 #if WIN32
 

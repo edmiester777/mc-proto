@@ -14,8 +14,8 @@ namespace minecraft
         varint(int val);
         varint(function<uint8_t()> readFunc);
 
-        friend std::ostream& operator<<(std::ostream& stream, minecraft::varint& i);
-        friend std::istream& operator>>(std::istream& stream, minecraft::varint& i);
+        friend mcstream& operator<<(mcstream& stream, varint& i);
+        friend mcstream& operator>>(mcstream& stream, varint& i);
 
         int val() const;
 
