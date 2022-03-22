@@ -179,6 +179,7 @@ void minecraft::Client::read_packet()
         {
         case LoginPacketIds::I_LOGIN_SUCCESS:
         {
+            m_state = States::PLAY;
             shared_ptr<InboundLoginPacket> loginPacket(new InboundLoginPacket(stream));
             m_listener->OnLoginSuccess(*this, *loginPacket);
             packet = loginPacket;
