@@ -6,6 +6,8 @@
 #include "packets/outbound/handshake.h"
 #include "packets/outbound/status.h"
 #include "packets/outbound/login.h"
+#include "packets/outbound/play/ping.h"
+#include "packets/outbound/play/keepalive.h"
 
 #define SIMPLE_PACKET_READ(id, cls, call) \
     case (id): \
@@ -205,6 +207,22 @@ void minecraft::Client::read_packet()
         switch ((PlayPacketIds)packetId.val())
         {
             SIMPLE_PACKET_READ(PlayPacketIds::I_SPAWN_ENTITY, InboundSpawnEntityPacket, OnSpawnEntity)
+        case PlayPacketIds::I_PING:
+            {
+                // received a ping... we must reply with a pong
+                shared_ptr<InboundPingPacket> pingpacket(new InboundPingPacket(stream));
+                write_packet(OutboundPingPacket(pingpacket->pingId()));
+                packet = pingpacket;
+                break;
+            }
+        case PlayPacketIds::I_KEEPALIVE:
+            {
+                // received keepalive... does same thing as ping
+                shared_ptr<InboundKeepalivePacket> keepalive(new InboundKeepalivePacket(stream));
+                write_packet(OutboundKeepalivePacket(keepalive->pingId()));
+                packet = keepalive;
+                break;
+            }
         }
     }
 

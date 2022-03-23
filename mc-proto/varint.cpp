@@ -8,6 +8,10 @@ namespace minecraft
         : m_value(0)
     {
     }
+    varint::varint(const varint& other)
+        : m_value(other.m_value)
+    {
+    }
     varint::varint(int val)
         : m_value(val)
     {
@@ -65,10 +69,10 @@ namespace minecraft
         }
     }
 
-    mcstream& operator<<(mcstream& stream, varint& i)
+    mcstream& operator<<(mcstream& stream, varint i)
     {
         i.write([&] (uint8_t b) {
-            stream << b;
+            stream.write((char*)&b, 1);
         });
         return stream;
     }

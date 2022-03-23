@@ -31,6 +31,8 @@ add_library (mc-proto STATIC
     "packets/packet.cpp"
     "packets/inbound/status.cpp"
     "packets/inbound/login.cpp"
+    "packets/inbound/play/keepalive.cpp"
+    "packets/inbound/play/ping.cpp"
     "packets/inbound/play/spawnentity.cpp"
     "packets/outbound/handshake.cpp"
     "packets/outbound/status.cpp"

@@ -11,10 +11,11 @@ namespace minecraft
     {
     public:
         varint();
+        varint(const varint& other);
         varint(int val);
         varint(function<uint8_t()> readFunc);
 
-        friend mcstream& operator<<(mcstream& stream, varint& i);
+        friend mcstream& operator<<(mcstream& stream, varint i);
         friend mcstream& operator>>(mcstream& stream, varint& i);
 
         int val() const;

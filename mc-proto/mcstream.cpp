@@ -105,85 +105,98 @@ namespace minecraft
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const int8_t& v)
+    mcstream& mcstream::operator>>(safebytebuffer& buf)
+    {
+        buf.push_stream(*this);
+
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const int8_t v)
     {
         write2buf(v);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const uint8_t& v)
+    mcstream& mcstream::operator<<(const uint8_t v)
     {
         write2buf(v);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const int16_t& v)
+    mcstream& mcstream::operator<<(const int16_t v)
     {
         uint16_t network = htons(v);
         write2buf(network);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const uint16_t& v)
+    mcstream& mcstream::operator<<(const uint16_t v)
     {
         uint16_t network = htons(v);
         write2buf(network);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const int32_t& v)
+    mcstream& mcstream::operator<<(const int32_t v)
     {
         uint32_t network = htonl(v);
         write2buf(network);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const uint32_t& v)
+    mcstream& mcstream::operator<<(const uint32_t v)
     {
         uint32_t network = htonl(v);
         write2buf(network);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const int64_t& v)
+    mcstream& mcstream::operator<<(const int64_t v)
     {
         uint64_t network = htonll(v);
         write2buf(network);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const uint64_t& v)
+    mcstream& mcstream::operator<<(const uint64_t v)
     {
         uint64_t network = htonll(v);
         write2buf(network);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const double& d)
+    mcstream& mcstream::operator<<(const double d)
     {
         uint64_t network = htond(d);
         write2buf(network);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const float& f)
+    mcstream& mcstream::operator<<(const float f)
     {
         uint32_t network = htonf(f);
         write2buf(network);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const bool& v)
+    mcstream& mcstream::operator<<(const bool v)
     {
         write2buf(v);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(const string& v)
+    mcstream& mcstream::operator<<(const string v)
     {
         varint len(v.length());
         *this << len;
         write(v.c_str(), v.length());
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const char* s)
+    {
+        *this << string(s);
         return *this;
     }
 }

@@ -36,6 +36,11 @@ namespace minecraft
 
     enum class PlayPacketIds
     {
-        I_SPAWN_ENTITY = 0x00
+        O_PING = 0x1D,
+        O_KEEPALIVE = 0x0F,
+
+        I_SPAWN_ENTITY = 0x00,
+        I_PING = 0x30,
+        I_KEEPALIVE = 0x21,
     };
 }
