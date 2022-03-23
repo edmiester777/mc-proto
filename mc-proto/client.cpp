@@ -2,9 +2,19 @@
 #include <glog/logging.h>
 #include "packets/inbound/status.h"
 #include "packets/inbound/login.h"
+#include "packets/inbound/play/spawnentity.h"
 #include "packets/outbound/handshake.h"
 #include "packets/outbound/status.h"
 #include "packets/outbound/login.h"
+
+#define SIMPLE_PACKET_READ(id, cls, call) \
+    case (id): \
+    { \
+        shared_ptr<cls> tmppacket = shared_ptr<cls>(new cls(stream)); \
+        m_listener->call(*this, *tmppacket); \
+        packet = tmppacket; \
+        break; \
+    }
 
 using namespace minecraft;
 
@@ -77,7 +87,7 @@ void minecraft::Client::run()
 {
     while (true)
     {
-        LOG(INFO) << "Attempting to read packet...";
+        VLOG(VLOG_DEBUG) << "Attempting to read packet...";
         m_mainMutex.lock();
         bool connected = m_connector.is_connected();
         m_mainMutex.unlock();
@@ -190,20 +200,29 @@ void minecraft::Client::read_packet()
             break;
         }
     }
+    else if (m_state == States::PLAY)
+    {
+        switch ((PlayPacketIds)packetId.val())
+        {
+            SIMPLE_PACKET_READ(PlayPacketIds::I_SPAWN_ENTITY, InboundSpawnEntityPacket, OnSpawnEntity)
+        }
+    }
 
     if (packet)
     {
-        VLOG(VLOG_DEBUG)
+        VLOG(VLOG_INFO)
             << "Received packet:" << endl
             << "\tsize: " << incoming_packet_len.val() << endl
             << "\tstate: " << setw(2) << setfill('0') << (int)m_state << endl
-            << "\tcontent: " << *packet.get();
+            << "\tcontent: { " << *packet << " }";
     }
     else
     {
-        LOG(WARNING)
-            << "Could not read packet with ID "
-            << "0x" << setw(2) << setfill('0') << packetId.val()
-            << "for state 0x" << setw(2) << setfill('0') << (int)m_state;
+        // disabling until all packets are implemented
+        // 
+        //LOG(WARNING)
+        //    << "Could not read packet with ID "
+        //    << "0x" << setw(2) << setfill('0') << packetId.val()
+        //    << "for state 0x" << setw(2) << setfill('0') << (int)m_state;
     }
 }

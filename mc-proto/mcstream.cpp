@@ -25,37 +25,65 @@ namespace minecraft
     }
     mcstream& mcstream::operator>>(int16_t& v)
     {
-        read2buf(v);
+        uint16_t network;
+        read2buf(network);
+        v = ntohs(network);
         return *this;
     }
 
     mcstream& mcstream::operator>>(uint16_t& v)
     {
-        read2buf(v);
+        uint16_t network;
+        read2buf(network);
+        v = ntohs(network);
         return *this;
     }
 
     mcstream& mcstream::operator>>(int32_t& v)
     {
-        read2buf(v);
+        uint32_t network;
+        read2buf(network);
+        v = ntohl(network);
         return *this;
     }
 
     mcstream& mcstream::operator>>(uint32_t& v)
     {
-        read2buf(v);
+        uint32_t network;
+        read2buf(network);
+        v = ntohl(network);
         return *this;
     }
 
     mcstream& mcstream::operator>>(int64_t& v)
     {
-        read2buf(v);
+        uint64_t network;
+        read2buf(network);
+        v = ntohll(network);
         return *this;
     }
 
     mcstream& mcstream::operator>>(uint64_t& v)
     {
-        read2buf(v);
+        uint64_t network;
+        read2buf(network);
+        v = ntohll(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator>>(double& d)
+    {
+        uint64_t network;
+        read2buf(network);
+        d = ntohd(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator>>(float& f)
+    {
+        uint32_t network;
+        read2buf(network);
+        f = ntohf(network);
         return *this;
     }
 
@@ -68,73 +96,90 @@ namespace minecraft
     mcstream& mcstream::operator>>(string& s)
     {
         varint len;
-        VLOG(VLOG_DEBUG) << "STREAM_POS " << tellg();
         *this >> len;
-        VLOG(VLOG_DEBUG) << "STREAM_POS " << tellg();
 
         safebytebuffer buf;
         buf.reserve(len.val());
         read((char*)buf.data(), len.val());
-        VLOG(VLOG_DEBUG) << "STREAM_POS " << tellg();
         s = string((char*)buf.data(), len.val());
         return *this;
     }
 
-    mcstream& mcstream::operator<<(int8_t& v)
+    mcstream& mcstream::operator<<(const int8_t& v)
     {
         write2buf(v);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(uint8_t& v)
+    mcstream& mcstream::operator<<(const uint8_t& v)
     {
         write2buf(v);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(int16_t& v)
+    mcstream& mcstream::operator<<(const int16_t& v)
+    {
+        uint16_t network = htons(v);
+        write2buf(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const uint16_t& v)
+    {
+        uint16_t network = htons(v);
+        write2buf(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const int32_t& v)
+    {
+        uint32_t network = htonl(v);
+        write2buf(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const uint32_t& v)
+    {
+        uint32_t network = htonl(v);
+        write2buf(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const int64_t& v)
+    {
+        uint64_t network = htonll(v);
+        write2buf(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const uint64_t& v)
+    {
+        uint64_t network = htonll(v);
+        write2buf(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const double& d)
+    {
+        uint64_t network = htond(d);
+        write2buf(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const float& f)
+    {
+        uint32_t network = htonf(f);
+        write2buf(network);
+        return *this;
+    }
+
+    mcstream& mcstream::operator<<(const bool& v)
     {
         write2buf(v);
         return *this;
     }
 
-    mcstream& mcstream::operator<<(uint16_t& v)
-    {
-        write2buf(v);
-        return *this;
-    }
-
-    mcstream& mcstream::operator<<(int32_t& v)
-    {
-        write2buf(v);
-        return *this;
-    }
-
-    mcstream& mcstream::operator<<(uint32_t& v)
-    {
-        write2buf(v);
-        return *this;
-    }
-
-    mcstream& mcstream::operator<<(int64_t& v)
-    {
-        write2buf(v);
-        return *this;
-    }
-
-    mcstream& mcstream::operator<<(uint64_t& v)
-    {
-        write2buf(v);
-        return *this;
-    }
-
-    mcstream& mcstream::operator<<(bool& v)
-    {
-        write2buf(v);
-        return *this;
-    }
-
-    mcstream& mcstream::operator<<(string& v)
+    mcstream& mcstream::operator<<(const string& v)
     {
         varint len(v.length());
         *this << len;

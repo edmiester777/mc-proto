@@ -33,4 +33,9 @@ namespace minecraft
         I_ENCRYPTION_REQUEST = 0x01,
         I_LOGIN_SUCCESS = 0x02,
     };
+
+    enum class PlayPacketIds
+    {
+        I_SPAWN_ENTITY = 0x00
+    };
 }

@@ -12,6 +12,8 @@ add_library (mc-proto STATIC
     "mcstream.cpp"
     "uuid.cpp"
 
+    "minecraft/entitytypes.cpp"
+
     "nbt/tag.cpp"
     "nbt/compoundtag.cpp"
     "nbt/bytetag.cpp"
@@ -29,6 +31,7 @@ add_library (mc-proto STATIC
     "packets/packet.cpp"
     "packets/inbound/status.cpp"
     "packets/inbound/login.cpp"
+    "packets/inbound/play/spawnentity.cpp"
     "packets/outbound/handshake.cpp"
     "packets/outbound/status.cpp"
     "packets/outbound/login.cpp"

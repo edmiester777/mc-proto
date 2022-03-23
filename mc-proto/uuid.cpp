@@ -94,13 +94,13 @@ namespace minecraft
         return stream;
     }
 
-    mcstream& operator<<(mcstream& stream, uuid& u)
+    mcstream& operator<<(mcstream& stream, const uuid& u)
     {
         stream << u.m_mostSignificant << u.m_leastSignificant;
         return stream;
     }
 
-    std::ostream& operator<<(std::ostream& stream, minecraft::uuid& u)
+    std::ostream& operator<<(std::ostream& stream, const minecraft::uuid& u)
     {
         stream << u.to_string();
         return stream;

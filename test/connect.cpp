@@ -10,22 +10,26 @@ public:
     // Inherited via ClientEventListener
     virtual void OnLoginSuccess(Client& c, InboundLoginPacket& packet) override
     {
-        LOG(INFO) << packet;
-        exit(0);
+        LOG(INFO) << "Logged in as " << packet.username();
     }
 
     virtual void OnLoginFailed(Client& c) override
     {
+        LOG(WARNING) << "Login attempt failed.";
+    }
 
+    // Inherited via ClientEventListener
+    virtual void OnSpawnEntity(Client& c, InboundSpawnEntityPacket& packet) override
+    {
     }
 };
 
 int main(int argc, char** argv)
 {
-    FLAGS_v = 10;
+    google::InitGoogleLogging(argv[0]);
+    FLAGS_v = VLOG_INFO;
     FLAGS_logtostdout = true;
     FLAGS_logbuflevel = google::GLOG_INFO;
-    google::InitGoogleLogging(argv[0]);
 
     LOG(INFO) << "TEST";
 

@@ -14,8 +14,8 @@ namespace minecraft
         string to_string() const;
 
         friend mcstream& operator>>(mcstream& stream, uuid& u);
-        friend mcstream& operator<<(mcstream& stream, uuid& u);
-        friend std::ostream& operator<<(ostream& stream, uuid& u);
+        friend mcstream& operator<<(mcstream& stream, const uuid& u);
+        friend std::ostream& operator<<(std::ostream& stream, const uuid& u);
 
     private:
         uint64_t m_mostSignificant;
