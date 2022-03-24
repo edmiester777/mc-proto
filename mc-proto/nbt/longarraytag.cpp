@@ -50,7 +50,7 @@ NBTTagTypes minecraft::NBTLongArrayTag::type() const
 
 void minecraft::NBTLongArrayTag::write_data(ostream& stream) const
 {
-    NBTIntTag(m_value.size()).write_data(stream);
+    NBTIntTag((int)m_value.size()).write_data(stream);
     for (int i = 0; i < m_value.size(); ++i)
     {
         NBTLongTag(m_value[i]).write_data(stream);

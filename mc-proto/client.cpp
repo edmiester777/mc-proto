@@ -122,9 +122,9 @@ void minecraft::Client::write_packet(const Packet& packet)
 
     // writing packet size as var int
     safebytebuffer lengthbuffer;
-    lengthbuffer.push(varint(buffer.size()));
+    lengthbuffer.push(varint((int)buffer.size()));
     VLOG(VLOG_DEBUG) << "Outgoing packet length: " << buffer.size();
-    int written = m_connector.write_n(lengthbuffer.data(), lengthbuffer.size());
+    int written = (int)m_connector.write_n(lengthbuffer.data(), lengthbuffer.size());
 
     if (written != lengthbuffer.size())
     {
@@ -134,7 +134,7 @@ void minecraft::Client::write_packet(const Packet& packet)
     }
 
     // writing packet data
-    written = m_connector.write_n(buffer.data(), buffer.size());
+    written = (int)m_connector.write_n(buffer.data(), (int)buffer.size());
     if (written != buffer.size())
     {
         LOG(ERROR)
@@ -150,7 +150,7 @@ void minecraft::Client::read_packet()
     // reading header for packet length
     varint incoming_packet_len([this] {
         uint8_t b;
-        int read = m_connector.read_n(&b, 1);
+        int read = (int)m_connector.read_n(&b, 1);
         if (read != 1)
         {
             LOG(ERROR) << "Could not read byte from socket for varint.";
@@ -162,7 +162,7 @@ void minecraft::Client::read_packet()
     // reading packet to raw buffer
     safebytebuffer buf;
     buf.reserve(incoming_packet_len.val());
-    int recvd = m_connector.read_n(buf.data(), incoming_packet_len.val());
+    int recvd = (int)m_connector.read_n(buf.data(), incoming_packet_len.val());
     buf.push_buffer(buf.data(), incoming_packet_len.val());
     VLOG(VLOG_DEBUG) << "Read packet data in " << incoming_packet_len.val() << " bytes";
 

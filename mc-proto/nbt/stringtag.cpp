@@ -46,7 +46,7 @@ string& minecraft::NBTStringTag::value()
 void minecraft::NBTStringTag::write_data(ostream& stream) const
 {
     // writing string length
-    NBTShortTag(m_value.length()).write_data(stream);
+    NBTShortTag((int16_t)m_value.length()).write_data(stream);
 
     // writing our data
     stream.write(m_value.c_str(), m_value.length());

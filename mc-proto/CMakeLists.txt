@@ -9,7 +9,6 @@ add_library (mc-proto STATIC
     "safebytebuffer.cpp"
     "client.cpp" 
     "compressionhelper.cpp"
-    "packetreader.cpp"
     "mcstream.cpp"
     "uuid.cpp"
 

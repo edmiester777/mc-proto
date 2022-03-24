@@ -30,7 +30,7 @@ namespace minecraft
 
         friend std::ostream& operator<<(std::ostream& stream, const safebytebuffer& buf);
 
-        void push_buffer(std::uint8_t* buf, size_t len);
+        void push_buffer(std::uint8_t* buf, int len);
         void push_stream(std::istream& stream);
 
         void push(bool b);

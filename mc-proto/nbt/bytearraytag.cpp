@@ -48,7 +48,7 @@ NBTTagTypes minecraft::NBTByteArrayTag::type() const
 
 void minecraft::NBTByteArrayTag::write_data(ostream& stream) const
 {
-    NBTIntTag(size()).write_data(stream);
+    NBTIntTag((int)size()).write_data(stream);
     for (int i = 0; i < size(); ++i)
     {
         NBTByteTag(m_value[i]).write_data(stream);

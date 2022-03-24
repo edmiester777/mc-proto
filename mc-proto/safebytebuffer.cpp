@@ -89,7 +89,7 @@ std::ostream& minecraft::operator<<(std::ostream& stream, const safebytebuffer& 
     return stream;
 }
 
-void minecraft::safebytebuffer::push_buffer(std::uint8_t* buf, size_t len)
+void minecraft::safebytebuffer::push_buffer(std::uint8_t* buf, int len)
 {
     // this strategy is in leau of the vector::insert method because we don't want to force
     // frequent re-allocations for expansion.
@@ -99,7 +99,7 @@ void minecraft::safebytebuffer::push_buffer(std::uint8_t* buf, size_t len)
     {
         // we will resize buffer to max(capacity * 2, sizeibuf * 2) to limit
         // future memory allocation/copy time.
-        int newsize = max(capacity() * 2, len * 2);
+        int newsize = (int)max(capacity() * 2, len * 2);
         reserve(newsize);
     }
 
@@ -186,8 +186,8 @@ void minecraft::safebytebuffer::push(double d)
 
 void minecraft::safebytebuffer::push(const string& s)
 {
-    push(varint(s.length()));
-    push_buffer((uint8_t*)s.c_str(), s.length());
+    push(varint((int)s.length()));
+    push_buffer((uint8_t*)s.c_str(), (int)s.length());
 }
 
 void minecraft::safebytebuffer::push(varint i)

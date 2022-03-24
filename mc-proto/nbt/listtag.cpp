@@ -61,7 +61,7 @@ NBTTagTypes minecraft::NBTListTag::type() const
 void minecraft::NBTListTag::write_data(ostream& stream) const
 {
     NBTByteTag((uint8_t)m_elementType).write_data(stream);
-    NBTIntTag(size()).write_data(stream);
+    NBTIntTag((int)size()).write_data(stream);
     for (int i = 0; i < size(); ++i)
     {
         m_value[i]->write_data(stream);

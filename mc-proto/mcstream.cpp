@@ -1,5 +1,5 @@
-#include "mcstream.h";
-#include "inc.h";
+#include "mcstream.h"
+#include "inc.h"
 #include <glog/logging.h>
 
 #define read2buf(v) read((char*)&v, sizeof(v))
@@ -188,9 +188,9 @@ namespace minecraft
 
     mcstream& mcstream::operator<<(const string v)
     {
-        varint len(v.length());
+        varint len((int)v.length());
         *this << len;
-        write(v.c_str(), v.length());
+        write(v.c_str(), (int)v.length());
         return *this;
     }
 
