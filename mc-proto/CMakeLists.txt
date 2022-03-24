@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 add_library (mc-proto STATIC
     "varint.cpp"
+    "position.cpp"
     "safebytebuffer.cpp"
     "client.cpp" 
     "compressionhelper.cpp"
@@ -36,6 +37,7 @@ add_library (mc-proto STATIC
     "packets/inbound/play/spawnentity.cpp"
     "packets/inbound/play/spawnexperienceorb.cpp"
     "packets/inbound/play/spawnlivingentity.cpp"
+    "packets/inbound/play/spawnpainting.cpp"
     "packets/outbound/handshake.cpp"
     "packets/outbound/status.cpp"
     "packets/outbound/login.cpp"

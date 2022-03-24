@@ -18,6 +18,7 @@
 #include "safebytebuffer.h"
 #include "mcstream.h"
 #include "varint.h"
+#include "position.h"
 #include "uuid.h"
 #include "minecraft/entitytypes.h"
 

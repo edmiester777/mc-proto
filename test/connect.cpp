@@ -32,6 +32,11 @@ public:
     virtual void OnSpawnLivingEntity(Client& c, InboundSpawnLivingEntityPacket& packet) override
     {
     }
+
+    // Inherited via ClientEventListener
+    virtual void OnSpawnPainting(Client& c, InboundSpawnPaintingPacket& packet) override
+    {
+    }
 };
 
 int main(int argc, char** argv)
