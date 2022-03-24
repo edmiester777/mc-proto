@@ -38,27 +38,27 @@ namespace minecraft
         return m_z;
     }
 
-    int16_t InboundSpawnEntityPacket::velocityX() const
+    i16 InboundSpawnEntityPacket::velocityX() const
     {
         return m_velX;
     }
 
-    int16_t InboundSpawnEntityPacket::velocityY() const
+    i16 InboundSpawnEntityPacket::velocityY() const
     {
         return m_velY;
     }
 
-    int16_t InboundSpawnEntityPacket::velocityZ() const
+    i16 InboundSpawnEntityPacket::velocityZ() const
     {
         return m_velZ;
     }
 
-    uint8_t InboundSpawnEntityPacket::yaw() const
+    angle InboundSpawnEntityPacket::yaw() const
     {
         return m_yaw;
     }
 
-    uint8_t InboundSpawnEntityPacket::pitch() const
+    angle InboundSpawnEntityPacket::pitch() const
     {
         return m_pitch;
     }

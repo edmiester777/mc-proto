@@ -17,11 +17,11 @@ namespace minecraft
         double x() const;
         double y() const;
         double z() const;
-        int16_t velocityX() const;
-        int16_t velocityY() const;
-        int16_t velocityZ() const;
-        uint8_t yaw() const;
-        uint8_t pitch() const;
+        i16 velocityX() const;
+        i16 velocityY() const;
+        i16 velocityZ() const;
+        angle yaw() const;
+        angle pitch() const;
         int data() const;
 
         string to_string() const override;
@@ -39,8 +39,8 @@ namespace minecraft
         i16 m_velX;
         i16 m_velY;
         i16 m_velZ;
-        u8 m_yaw;
-        u8 m_pitch;
+        angle m_yaw;
+        angle m_pitch;
         int m_data;
     };
 }

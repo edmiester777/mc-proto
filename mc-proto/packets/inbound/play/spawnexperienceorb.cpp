@@ -24,7 +24,7 @@ namespace minecraft
     {
         return m_z;
     }
-    int16_t InboundSpawnExperienceOrbPacket::count() const
+    i16 InboundSpawnExperienceOrbPacket::count() const
     {
         return m_count;
     }

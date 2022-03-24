@@ -16,7 +16,7 @@ namespace minecraft
         double x() const;
         double y() const;
         double z() const;
-        int16_t count() const;
+        i16 count() const;
 
         string to_string() const override;
 
@@ -27,6 +27,6 @@ namespace minecraft
         double m_x;
         double m_y;
         double m_z;
-        int16_t m_count;
+        i16 m_count;
     };
 }
