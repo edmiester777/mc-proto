@@ -8,6 +8,7 @@
 #include "packets/inbound/play/spawnplayer.h"
 #include "packets/inbound/play/entityanimation.h"
 #include "packets/inbound/play/ackdig.h"
+#include "packets/inbound/play/blockbreakanim.h"
 
 namespace minecraft
 {
@@ -16,14 +17,15 @@ namespace minecraft
     class ClientEventListener
     {
     public:
-        virtual void OnLoginSuccess(Client& c, InboundLoginPacket& packet) = 0;
+        virtual void OnLoginSuccess(Client& c, const InboundLoginPacket& packet) = 0;
         virtual void OnLoginFailed(Client& c) = 0;
-        virtual void OnSpawnEntity(Client& c, InboundSpawnEntityPacket& packet) = 0;
-        virtual void OnSpawnExperienceOrb(Client& c, InboundSpawnExperienceOrbPacket& packet) = 0;
-        virtual void OnSpawnLivingEntity(Client& c, InboundSpawnLivingEntityPacket& packet) = 0;
-        virtual void OnSpawnPainting(Client& c, InboundSpawnPaintingPacket& packet) = 0;
-        virtual void OnSpawnPlayer(Client& c, InboundSpawnPlayerPacket& packet) = 0;
-        virtual void OnPlayerAnimation(Client& c, InboundEntityAnimationPacket& packet) = 0;
-        virtual void OnBlockDigAcknowleged(Client& c, InboundAckDigPacket& packet) = 0;
+        virtual void OnSpawnEntity(Client& c, const InboundSpawnEntityPacket& packet) = 0;
+        virtual void OnSpawnExperienceOrb(Client& c, const InboundSpawnExperienceOrbPacket& packet) = 0;
+        virtual void OnSpawnLivingEntity(Client& c, const InboundSpawnLivingEntityPacket& packet) = 0;
+        virtual void OnSpawnPainting(Client& c, const InboundSpawnPaintingPacket& packet) = 0;
+        virtual void OnSpawnPlayer(Client& c, const InboundSpawnPlayerPacket& packet) = 0;
+        virtual void OnPlayerAnimation(Client& c, const InboundEntityAnimationPacket& packet) = 0;
+        virtual void OnBlockDigAcknowleged(Client& c, const InboundAckDigPacket& packet) = 0;
+        virtual void OnBlockBreakAnimation(Client& c, const InboundBlockBreakAnimationPacket& packet) = 0;
     };
 }

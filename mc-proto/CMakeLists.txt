@@ -41,6 +41,7 @@ add_library (mc-proto STATIC
     "packets/inbound/play/spawnplayer.cpp"
     "packets/inbound/play/entityanimation.cpp"
     "packets/inbound/play/ackdig.cpp"
+    "packets/inbound/play/blockbreakanim.cpp"
     "packets/outbound/handshake.cpp"
     "packets/outbound/status.cpp"
     "packets/outbound/login.cpp"

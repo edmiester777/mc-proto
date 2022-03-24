@@ -7,49 +7,34 @@ class Listener : public ClientEventListener
 {
 public:
 
-    // Inherited via ClientEventListener
-    virtual void OnLoginSuccess(Client& c, InboundLoginPacket& packet) override
+    virtual void OnLoginSuccess(Client& c, const InboundLoginPacket& packet) override
     {
-        LOG(INFO) << "Logged in as " << packet.username();
     }
-
     virtual void OnLoginFailed(Client& c) override
     {
-        LOG(WARNING) << "Login attempt failed.";
     }
-
-    // Inherited via ClientEventListener
-    virtual void OnSpawnEntity(Client& c, InboundSpawnEntityPacket& packet) override
+    virtual void OnSpawnEntity(Client& c, const InboundSpawnEntityPacket& packet) override
     {
     }
-
-    // Inherited via ClientEventListener
-    virtual void OnSpawnExperienceOrb(Client& c, InboundSpawnExperienceOrbPacket& packet) override
+    virtual void OnSpawnExperienceOrb(Client& c, const InboundSpawnExperienceOrbPacket& packet) override
     {
     }
-
-    // Inherited via ClientEventListener
-    virtual void OnSpawnLivingEntity(Client& c, InboundSpawnLivingEntityPacket& packet) override
+    virtual void OnSpawnLivingEntity(Client& c, const InboundSpawnLivingEntityPacket& packet) override
     {
     }
-
-    // Inherited via ClientEventListener
-    virtual void OnSpawnPainting(Client& c, InboundSpawnPaintingPacket& packet) override
+    virtual void OnSpawnPainting(Client& c, const InboundSpawnPaintingPacket& packet) override
     {
     }
-
-    // Inherited via ClientEventListener
-    virtual void OnSpawnPlayer(Client& c, InboundSpawnPlayerPacket& packet) override
+    virtual void OnSpawnPlayer(Client& c, const InboundSpawnPlayerPacket& packet) override
     {
     }
-
-    // Inherited via ClientEventListener
-    virtual void OnPlayerAnimation(Client& c, InboundEntityAnimationPacket& packet) override
+    virtual void OnPlayerAnimation(Client& c, const InboundEntityAnimationPacket& packet) override
     {
     }
-
-    // Inherited via ClientEventListener
-    virtual void OnBlockDigAcknowleged(Client& c, InboundAckDigPacket& packet) override
+    virtual void OnBlockDigAcknowleged(Client& c, const InboundAckDigPacket& packet) override
+    {
+    }
+    virtual void OnBlockBreakAnimation(Client& c, const InboundBlockBreakAnimationPacket& packet) override
     {
     }
 };

@@ -8,7 +8,7 @@
 - [x] Entity Animation (clientbound)
 - [ ] Statistics
 - [x] Acknowledge Player Digging
-- [ ] Block Break Animation
+- [x] Block Break Animation
 - [ ] Block Entity Data
 - [ ] Block Action
 - [ ] Block Change
