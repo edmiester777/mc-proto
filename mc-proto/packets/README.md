@@ -1,7 +1,7 @@
 ## Clientbound:
 - [x] Spawn Entity
 - [x] Spawn Experience Orb
-- [ ] Spawn Living Entity
+- [x] Spawn Living Entity
 - [ ] Spawn Painting
 - [ ] Spawn Player
 - [ ] Sculk Vibration Signal

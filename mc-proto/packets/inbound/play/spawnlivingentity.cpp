@@ -1,74 +1,74 @@
-#include "spawnentity.h"
+#include "spawnlivingentity.h"
 #include <iomanip>
 
 namespace minecraft
 {
-    InboundSpawnEntityPacket::InboundSpawnEntityPacket(mcstream& stream)
+    InboundSpawnLivingEntityPacket::InboundSpawnLivingEntityPacket(mcstream& stream)
     {
         stream >> *this;
     }
 
-    int InboundSpawnEntityPacket::entityId() const
+    int InboundSpawnLivingEntityPacket::entityId() const
     {
         return m_entityId;
     }
 
-    uuid InboundSpawnEntityPacket::entityUniqueId() const
+    uuid InboundSpawnLivingEntityPacket::entityUniqueId() const
     {
         return m_entityUUID;
     }
 
-    EntityMetadataType InboundSpawnEntityPacket::entityType() const
+    EntityMetadataType InboundSpawnLivingEntityPacket::entityType() const
     {
         return m_entityType;
     }
 
-    double InboundSpawnEntityPacket::x() const
+    double InboundSpawnLivingEntityPacket::x() const
     {
         return m_x;
     }
 
-    double InboundSpawnEntityPacket::y() const
+    double InboundSpawnLivingEntityPacket::y() const
     {
         return m_y;
     }
 
-    double InboundSpawnEntityPacket::z() const
+    double InboundSpawnLivingEntityPacket::z() const
     {
         return m_z;
     }
 
-    int16_t InboundSpawnEntityPacket::velocityX() const
+    int16_t InboundSpawnLivingEntityPacket::velocityX() const
     {
         return m_velX;
     }
 
-    int16_t InboundSpawnEntityPacket::velocityY() const
+    int16_t InboundSpawnLivingEntityPacket::velocityY() const
     {
         return m_velY;
     }
 
-    int16_t InboundSpawnEntityPacket::velocityZ() const
+    int16_t InboundSpawnLivingEntityPacket::velocityZ() const
     {
         return m_velZ;
     }
 
-    uint8_t InboundSpawnEntityPacket::yaw() const
+    uint8_t InboundSpawnLivingEntityPacket::yaw() const
     {
         return m_yaw;
     }
 
-    uint8_t InboundSpawnEntityPacket::pitch() const
+    uint8_t InboundSpawnLivingEntityPacket::pitch() const
     {
         return m_pitch;
     }
 
-    int InboundSpawnEntityPacket::data() const
+    uint8_t InboundSpawnLivingEntityPacket::headYaw() const
     {
-        return m_data;
+        return m_headYaw;
     }
 
-    string InboundSpawnEntityPacket::to_string() const
+    string InboundSpawnLivingEntityPacket::to_string() const
     {
         stringstream stream;
         stream
@@ -78,13 +78,12 @@ namespace minecraft
             << "\ttype: " << setw(4) << setfill(' ') << (int)m_entityType << " " << ENTITY_TYPE_TO_STRING[m_entityType] << endl
             << "\tposition (" << m_x << ", " << m_y << ", " << m_z << ")" << endl
             << "\tvelocity (" << m_velX << ", " << m_velY << ", " << m_velZ << ")" << endl
-            << "\tpitch: " << (short)m_pitch << " yaw: " << (short)m_yaw << endl
-            << "\tdata: " << m_data;
+            << "\tpitch: " << (short)m_pitch << " yaw: " << (short)m_yaw << " headYaw: " << (short)m_headYaw;
 
         return stream.str();
     }
 
-    mcstream& operator>>(mcstream& stream, InboundSpawnEntityPacket& p)
+    mcstream& operator>>(mcstream& stream, InboundSpawnLivingEntityPacket& p)
     {
         varint entityId;
         varint entityType;
@@ -93,8 +92,7 @@ namespace minecraft
             >> p.m_entityUUID
             >> entityType
             >> p.m_x >> p.m_y >> p.m_z
-            >> p.m_yaw >> p.m_pitch
-            >> p.m_data
+            >> p.m_yaw >> p.m_pitch >> p.m_headYaw
             >> p.m_velX >> p.m_velY >> p.m_velZ;
 
         p.m_entityId = entityId.val();

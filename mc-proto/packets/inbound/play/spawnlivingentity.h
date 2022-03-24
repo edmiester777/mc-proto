@@ -5,11 +5,11 @@
 
 namespace minecraft
 {
-    class InboundSpawnEntityPacket : public Packet
+    class InboundSpawnLivingEntityPacket : public Packet
     {
-        PACKET_IMPL(InboundSpawnEntityPacket, States::PLAY, PlayPacketIds::I_SPAWN_ENTITY)
+        PACKET_IMPL(InboundSpawnLivingEntityPacket, States::PLAY, PlayPacketIds::I_SPAWN_ENTITY)
     public:
-        InboundSpawnEntityPacket(mcstream& stream);
+        InboundSpawnLivingEntityPacket(mcstream& stream);
 
         int entityId() const;
         uuid entityUniqueId() const;
@@ -22,12 +22,12 @@ namespace minecraft
         int16_t velocityZ() const;
         uint8_t yaw() const;
         uint8_t pitch() const;
-        int data() const;
+        uint8_t headYaw() const;
 
         string to_string() const override;
 
 
-        friend mcstream& operator>>(mcstream& stream, InboundSpawnEntityPacket& p);
+        friend mcstream& operator>>(mcstream& stream, InboundSpawnLivingEntityPacket& p);
 
     private:
         int m_entityId;
@@ -41,6 +41,6 @@ namespace minecraft
         i16 m_velZ;
         u8 m_yaw;
         u8 m_pitch;
-        int m_data;
+        u8 m_headYaw;
     };
 }

@@ -27,6 +27,11 @@ public:
     virtual void OnSpawnExperienceOrb(Client& c, InboundSpawnExperienceOrbPacket& packet) override
     {
     }
+
+    // Inherited via ClientEventListener
+    virtual void OnSpawnLivingEntity(Client& c, InboundSpawnLivingEntityPacket& packet) override
+    {
+    }
 };
 
 int main(int argc, char** argv)
