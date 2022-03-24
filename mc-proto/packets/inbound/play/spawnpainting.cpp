@@ -17,7 +17,7 @@ namespace minecraft
         return m_paintingID;
     }
 
-    uuid InboundSpawnPaintingPacket::entityUUID() const
+    uuid InboundSpawnPaintingPacket::uid() const
     {
         return m_entityUUID;
     }

@@ -12,7 +12,7 @@ namespace minecraft
         InboundSpawnEntityPacket(mcstream& stream);
 
         int entityId() const;
-        uuid entityUniqueId() const;
+        uuid uid() const;
         EntityMetadataType entityType() const;
         double x() const;
         double y() const;

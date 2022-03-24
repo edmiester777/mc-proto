@@ -37,6 +37,11 @@ public:
     virtual void OnSpawnPainting(Client& c, InboundSpawnPaintingPacket& packet) override
     {
     }
+
+    // Inherited via ClientEventListener
+    virtual void OnSpawnPlayer(Client& c, InboundSpawnPlayerPacket& packet) override
+    {
+    }
 };
 
 int main(int argc, char** argv)

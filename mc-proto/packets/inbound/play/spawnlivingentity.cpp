@@ -13,7 +13,7 @@ namespace minecraft
         return m_entityId;
     }
 
-    uuid InboundSpawnLivingEntityPacket::entityUniqueId() const
+    uuid InboundSpawnLivingEntityPacket::uid() const
     {
         return m_entityUUID;
     }

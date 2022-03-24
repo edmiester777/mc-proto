@@ -14,7 +14,7 @@ namespace minecraft
 
         int entityId() const;
         int paintingId() const;
-        uuid entityUUID() const;
+        uuid uid() const;
         position location() const;
         PaintingDirection direction() const;
 

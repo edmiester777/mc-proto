@@ -3,7 +3,7 @@
 - [x] Spawn Experience Orb
 - [x] Spawn Living Entity
 - [x] Spawn Painting
-- [ ] Spawn Player
+- [x] Spawn Player
 - [ ] Sculk Vibration Signal
 - [ ] Entity Animation (clientbound)
 - [ ] Statistics
