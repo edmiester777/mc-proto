@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../../packet.h"
 #include "../../states.h"
 #include "../../../minecraft/entitytypes.h"
