@@ -47,6 +47,11 @@ public:
     virtual void OnPlayerAnimation(Client& c, InboundEntityAnimationPacket& packet) override
     {
     }
+
+    // Inherited via ClientEventListener
+    virtual void OnBlockDigAcknowleged(Client& c, InboundAckDigPacket& packet) override
+    {
+    }
 };
 
 int main(int argc, char** argv)

@@ -212,6 +212,7 @@ void minecraft::Client::read_packet()
             SIMPLE_PACKET_READ(PlayPacketIds::I_SPAWN_PAINTING, InboundSpawnPaintingPacket, OnSpawnPainting)
             SIMPLE_PACKET_READ(PlayPacketIds::I_SPAWN_PLAYER, InboundSpawnPlayerPacket, OnSpawnPlayer)
             SIMPLE_PACKET_READ(PlayPacketIds::I_PLAYER_ANIATION, InboundEntityAnimationPacket, OnPlayerAnimation)
+            SIMPLE_PACKET_READ(PlayPacketIds::I_ACKNOWLEGE_DIG, InboundAckDigPacket, OnBlockDigAcknowleged)
         case PlayPacketIds::I_PING:
             {
                 // received a ping... we must reply with a pong

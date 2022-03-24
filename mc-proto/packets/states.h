@@ -45,6 +45,7 @@ namespace minecraft
         I_SPAWN_PAINTING = 0x03,
         I_SPAWN_PLAYER = 0x04,
         I_PLAYER_ANIATION = 0x06,
+        I_ACKNOWLEGE_DIG = 0x08,
         I_PING = 0x30,
         I_KEEPALIVE = 0x21,
     };

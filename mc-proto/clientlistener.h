@@ -7,6 +7,7 @@
 #include "packets/inbound/play/spawnpainting.h"
 #include "packets/inbound/play/spawnplayer.h"
 #include "packets/inbound/play/entityanimation.h"
+#include "packets/inbound/play/ackdig.h"
 
 namespace minecraft
 {
@@ -23,5 +24,6 @@ namespace minecraft
         virtual void OnSpawnPainting(Client& c, InboundSpawnPaintingPacket& packet) = 0;
         virtual void OnSpawnPlayer(Client& c, InboundSpawnPlayerPacket& packet) = 0;
         virtual void OnPlayerAnimation(Client& c, InboundEntityAnimationPacket& packet) = 0;
+        virtual void OnBlockDigAcknowleged(Client& c, InboundAckDigPacket& packet) = 0;
     };
 }

@@ -7,7 +7,7 @@
 - [ ] Sculk Vibration Signal
 - [x] Entity Animation (clientbound)
 - [ ] Statistics
-- [ ] Acknowledge Player Digging
+- [x] Acknowledge Player Digging
 - [ ] Block Break Animation
 - [ ] Block Entity Data
 - [ ] Block Action

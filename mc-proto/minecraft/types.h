@@ -14,4 +14,14 @@ namespace minecraft
         NORTH = 2,
         EAST = 3,
     };
+
+    /**
+     * Status of a dig action on a block.
+     */
+    enum class BlockDigStatus
+    {
+        STARTED = 0,
+        CANCELLED = 1,
+        FINISHED = 2,
+    };
 }
