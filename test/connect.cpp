@@ -42,6 +42,11 @@ public:
     virtual void OnSpawnPlayer(Client& c, InboundSpawnPlayerPacket& packet) override
     {
     }
+
+    // Inherited via ClientEventListener
+    virtual void OnPlayerAnimation(Client& c, InboundEntityAnimationPacket& packet) override
+    {
+    }
 };
 
 int main(int argc, char** argv)

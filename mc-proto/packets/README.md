@@ -5,7 +5,7 @@
 - [x] Spawn Painting
 - [x] Spawn Player
 - [ ] Sculk Vibration Signal
-- [ ] Entity Animation (clientbound)
+- [x] Entity Animation (clientbound)
 - [ ] Statistics
 - [ ] Acknowledge Player Digging
 - [ ] Block Break Animation
