@@ -207,6 +207,7 @@ void minecraft::Client::read_packet()
         switch ((PlayPacketIds)packetId.val())
         {
             SIMPLE_PACKET_READ(PlayPacketIds::I_SPAWN_ENTITY, InboundSpawnEntityPacket, OnSpawnEntity)
+            SIMPLE_PACKET_READ(PlayPacketIds::I_SPAWN_EXPERIENCE_ORB, InboundSpawnExperienceOrbPacket, OnSpawnExperienceOrb)
         case PlayPacketIds::I_PING:
             {
                 // received a ping... we must reply with a pong

@@ -40,6 +40,7 @@ namespace minecraft
         O_KEEPALIVE = 0x0F,
 
         I_SPAWN_ENTITY = 0x00,
+        I_SPAWN_EXPERIENCE_ORB = 0x01,
         I_PING = 0x30,
         I_KEEPALIVE = 0x21,
     };
