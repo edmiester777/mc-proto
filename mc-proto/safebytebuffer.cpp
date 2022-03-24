@@ -144,40 +144,43 @@ void minecraft::safebytebuffer::push(int16_t s)
 
 void minecraft::safebytebuffer::push(uint16_t s)
 {
-    push((int16_t)s);
+    uint16_t networkval = htons(s);
+    CAST_WRITE_STACK(networkval);
 }
 
 void minecraft::safebytebuffer::push(int32_t i)
 {
-    int32_t networkval = htonl(i);
+    uint32_t networkval = htonl(i);
     CAST_WRITE_STACK(networkval);
 }
 
 void minecraft::safebytebuffer::push(uint32_t i)
 {
-    push((int32_t)i);
+    uint32_t networkval = htonl(i);
+    CAST_WRITE_STACK(networkval);
 }
 
 void minecraft::safebytebuffer::push(int64_t l)
 {
-    int64_t networkval = htonll(l);
+    uint64_t networkval = htonll(l);
     CAST_WRITE_STACK(networkval);
 }
 
 void minecraft::safebytebuffer::push(uint64_t l)
 {
-    push((int64_t)l);
+    uint64_t networkval = htonll(l);
+    CAST_WRITE_STACK(networkval);
 }
 
 void minecraft::safebytebuffer::push(float f)
 {
-    float networkval = htonf(f);
+    uint32_t networkval = htonf(f);
     CAST_WRITE_STACK(networkval);
 }
 
 void minecraft::safebytebuffer::push(double d)
 {
-    double networkval = htond(d);
+    uint64_t networkval = htond(d);
     CAST_WRITE_STACK(networkval);
 }
 
