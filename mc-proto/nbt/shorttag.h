@@ -10,17 +10,19 @@ namespace minecraft
     class NBTShortTag : public NBTTagBase
     {
     public:
-        NBTShortTag(istream& stream);
-        NBTShortTag(int16_t val);
+        NBTShortTag(mcstream& stream);
+        NBTShortTag(i16 val);
         void operator=(const NBTShortTag& other);
-        void operator=(int16_t value);
+        void operator=(i16 value);
 
         int16_t value() const;
 
         virtual NBTTagTypes type() const override;
-        virtual void write_data(ostream& stream) const override;
+        virtual void write_data(mcstream& stream) const override;
+
+        friend mcstream& operator>>(mcstream& stream, NBTShortTag& tag);
 
     private:
-        int16_t m_value;
+        i16 m_value;
     };
 }

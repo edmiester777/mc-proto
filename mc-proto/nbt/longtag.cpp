@@ -1,44 +1,47 @@
 #include "longtag.h"
 
-using namespace minecraft;
-
-minecraft::NBTLongTag::NBTLongTag(istream& stream)
+namespace minecraft
 {
-    int64_t networkVal;
-    stream.read((char*)&networkVal, sizeof(int64_t));
-    m_value = ntohll(networkVal);
-}
-
-minecraft::NBTLongTag::NBTLongTag(int64_t value)
-{
-    m_value = value;
-}
-
-void minecraft::NBTLongTag::operator=(const NBTLongTag& other)
-{
-    if (this != &other)
+    NBTLongTag::NBTLongTag(mcstream& stream)
     {
-        m_value = other.m_value;
+        stream >> *this;
     }
-}
 
-void minecraft::NBTLongTag::operator=(int64_t value)
-{
-    m_value = value;
-}
+    NBTLongTag::NBTLongTag(i64 value)
+    {
+        m_value = value;
+    }
 
-int64_t minecraft::NBTLongTag::value() const
-{
-    return m_value;
-}
+    void NBTLongTag::operator=(const NBTLongTag& other)
+    {
+        if (this != &other)
+        {
+            m_value = other.m_value;
+        }
+    }
 
-void minecraft::NBTLongTag::write_data(ostream& stream) const
-{
-    int64_t networkValue = htonll(m_value);
-    stream.write((char*)&networkValue, sizeof(int64_t));
-}
+    void NBTLongTag::operator=(int64_t value)
+    {
+        m_value = value;
+    }
 
-NBTTagTypes minecraft::NBTLongTag::type() const
-{
-    return NBTTagTypes::TAG_LONG;
+    int64_t NBTLongTag::value() const
+    {
+        return m_value;
+    }
+
+    void NBTLongTag::write_data(mcstream& stream) const
+    {
+        stream << m_value;
+    }
+
+    NBTTagTypes NBTLongTag::type() const
+    {
+        return NBTTagTypes::TAG_LONG;
+    }
+
+    mcstream& operator>>(mcstream& stream, NBTLongTag& tag)
+    {
+        return stream >> tag.m_value;
+    }
 }

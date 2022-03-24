@@ -1,56 +1,67 @@
 #include "bytearraytag.h"
-#include "bytetag.h"
-#include "inttag.h"
 
-using namespace minecraft;
-
-minecraft::NBTByteArrayTag::NBTByteArrayTag(istream& stream)
+namespace minecraft
 {
-    int size = NBTIntTag(stream).value();
-    for (int i = 0; i < size; ++i)
+    NBTByteArrayTag::NBTByteArrayTag(mcstream& stream)
     {
-        m_value.push_back(NBTByteTag(stream).value());
+        stream >> *this;
     }
-}
 
-minecraft::NBTByteArrayTag::NBTByteArrayTag(const vector<uint8_t>& value)
-{
-    m_value = value;
-}
-
-void minecraft::NBTByteArrayTag::operator=(const NBTByteArrayTag& other)
-{
-    if (this != &other)
+    NBTByteArrayTag::NBTByteArrayTag(const vector<uint8_t>& value)
     {
-        m_value = other.m_value;
+        m_value = value;
     }
-}
 
-void minecraft::NBTByteArrayTag::operator=(const vector<uint8_t>& value)
-{
-    m_value = value;
-}
-
-size_t minecraft::NBTByteArrayTag::size() const
-{
-    return m_value.size();
-}
-
-uint8_t minecraft::NBTByteArrayTag::operator[](int index) const
-{
-    return m_value[index];
-}
-
-NBTTagTypes minecraft::NBTByteArrayTag::type() const
-{
-    return NBTTagTypes::TAG_BYTE_ARRAY;
-}
-
-void minecraft::NBTByteArrayTag::write_data(ostream& stream) const
-{
-    NBTIntTag((int)size()).write_data(stream);
-    for (int i = 0; i < size(); ++i)
+    void NBTByteArrayTag::operator=(const NBTByteArrayTag& other)
     {
-        NBTByteTag(m_value[i]).write_data(stream);
+        if (this != &other)
+        {
+            m_value = other.m_value;
+        }
+    }
+
+    void NBTByteArrayTag::operator=(const vector<uint8_t>& value)
+    {
+        m_value = value;
+    }
+
+    size_t NBTByteArrayTag::size() const
+    {
+        return m_value.size();
+    }
+
+    uint8_t NBTByteArrayTag::operator[](int index) const
+    {
+        return m_value[index];
+    }
+
+    NBTTagTypes NBTByteArrayTag::type() const
+    {
+        return NBTTagTypes::TAG_BYTE_ARRAY;
+    }
+
+    void NBTByteArrayTag::write_data(mcstream& stream) const
+    {
+        i32 arrsize = (i32)size();
+        stream << arrsize;
+        for (int i = 0; i < arrsize; ++i)
+        {
+            stream << m_value[i];
+        }
+    }
+
+    mcstream& operator>>(mcstream& stream, NBTByteArrayTag& tag)
+    {
+        i32 size;
+        stream >> size;
+        tag.m_value.resize(size);
+        for (int i = 0; i < size; ++i)
+        {
+            u8 byte;
+            stream >> byte;
+            tag.m_value[i] = byte;
+        }
+
+        return stream;
     }
 }

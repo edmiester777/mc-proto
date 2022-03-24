@@ -5,13 +5,13 @@ using namespace minecraft;
 
 TEST(NBTStringTag, ReadWriteStream)
 {
-    stringstream stream;
+    mcstream stream;
     NBTStringTag tag1("This is a test of encoding and decoding to/from streams.");
     tag1.write(stream);
 
     // checking written tag type
-    uint8_t tagType;
-    stream.read((char*)&tagType, sizeof(uint8_t));
+    u8 tagType;
+    stream >> tagType;
     EXPECT_EQ(NBTTagTypes::TAG_STRING, tagType);
 
     // reading back from stream

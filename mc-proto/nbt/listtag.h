@@ -10,7 +10,7 @@ namespace minecraft
     class NBTListTag : public NBTTagBase
     {
     public:
-        NBTListTag(istream& stream);
+        NBTListTag(mcstream& stream);
         NBTListTag(const NBTTagTypes type, const vector<NBTTagPtr>& value);
         void operator=(const NBTListTag& other);
         NBTTagPtr& operator[](int index);
@@ -23,7 +23,9 @@ namespace minecraft
         T& get(int index);
 
         virtual NBTTagTypes type() const override;
-        virtual void write_data(ostream& stream) const override;
+        virtual void write_data(mcstream& stream) const override;
+
+        friend mcstream& operator>>(mcstream& stream, NBTListTag& tag);
 
     private:
         NBTTagTypes m_elementType;

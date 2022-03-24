@@ -10,7 +10,7 @@ TEST(NBTByteArrayTag, ReadWriteStream)
     {
         bytes.push_back(i);
     }
-    stringstream stream;
+    mcstream stream;
 
     NBTByteArrayTag tag1(bytes);
     tag1.write_data(stream);

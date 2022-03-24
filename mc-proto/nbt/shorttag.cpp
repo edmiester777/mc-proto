@@ -1,44 +1,48 @@
 #include "shorttag.h"
 
-using namespace minecraft;
-
-minecraft::NBTShortTag::NBTShortTag(istream& stream)
+namespace minecraft
 {
-    int16_t buf;
-    stream.read((char*)&buf, sizeof(int16_t));
-    m_value = ntohs(buf);
-}
-
-minecraft::NBTShortTag::NBTShortTag(int16_t val)
-{
-    m_value = val;
-}
-
-void minecraft::NBTShortTag::operator=(const NBTShortTag& other)
-{
-    if (this != &other)
+    NBTShortTag::NBTShortTag(mcstream& stream)
     {
-        m_value = other.m_value;
+        stream >> *this;
     }
-}
 
-void minecraft::NBTShortTag::operator=(int16_t value)
-{
-    m_value = value;
-}
+    NBTShortTag::NBTShortTag(i16 val)
+    {
+        m_value = val;
+    }
 
-int16_t minecraft::NBTShortTag::value() const
-{
-    return m_value;
-}
+    void NBTShortTag::operator=(const NBTShortTag& other)
+    {
+        if (this != &other)
+        {
+            m_value = other.m_value;
+        }
+    }
 
-void minecraft::NBTShortTag::write_data(ostream& stream) const
-{
-    int16_t outVal = htons(m_value);
-    stream.write((char*)&outVal, sizeof(int16_t));
-}
+    void NBTShortTag::operator=(i16 value)
+    {
+        m_value = value;
+    }
 
-NBTTagTypes minecraft::NBTShortTag::type() const
-{
-    return NBTTagTypes::TAG_SHORT;
+    int16_t NBTShortTag::value() const
+    {
+        return m_value;
+    }
+
+    void NBTShortTag::write_data(mcstream& stream) const
+    {
+        stream << m_value;
+    }
+
+    NBTTagTypes NBTShortTag::type() const
+    {
+        return NBTTagTypes::TAG_SHORT;
+    }
+
+    mcstream& operator>>(mcstream& stream, NBTShortTag& tag)
+    {
+        return stream >> tag.m_value;
+    }
+
 }

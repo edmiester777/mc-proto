@@ -7,16 +7,18 @@ namespace minecraft
     class NBTLongArrayTag : public NBTTagBase
     {
     public:
-        NBTLongArrayTag(istream& stream);
-        NBTLongArrayTag(const vector<int64_t>& value);
+        NBTLongArrayTag(mcstream& stream);
+        NBTLongArrayTag(const vector<i64>& value);
         void operator=(const NBTLongArrayTag& other);
-        void operator=(const vector<int64_t>& value);
+        void operator=(const vector<i64>& value);
 
         size_t size();
-        int64_t operator[](int index);
+        i64& operator[](int index);
 
         virtual NBTTagTypes type() const override;
-        virtual void write_data(ostream& stream) const override;
+        virtual void write_data(mcstream& stream) const override;
+
+        friend mcstream& operator>>(mcstream& stream, NBTLongArrayTag& tag);
 
     private:
         vector<int64_t> m_value;

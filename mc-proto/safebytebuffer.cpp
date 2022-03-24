@@ -89,6 +89,12 @@ std::ostream& minecraft::operator<<(std::ostream& stream, const safebytebuffer& 
     return stream;
 }
 
+std::istream& minecraft::operator>>(std::istream& stream, safebytebuffer& buf)
+{
+    buf.push_stream(stream);
+    return stream;
+}
+
 void minecraft::safebytebuffer::push_buffer(std::uint8_t* buf, int len)
 {
     // this strategy is in leau of the vector::insert method because we don't want to force
@@ -110,14 +116,17 @@ void minecraft::safebytebuffer::push_buffer(std::uint8_t* buf, int len)
 void minecraft::safebytebuffer::push_stream(std::istream& stream)
 {
     // getting number of bytes left to read in stream
-    int start = stream.peek();
-    stream.seekg(stream.end);
-    int end = stream.peek();
+    int start = stream.tellg();
+    stream.seekg(0, ios::end);
+    int end = stream.tellg();
     stream.seekg(start);
     int length = end - start;
 
     // allocating buffer
-    uint8_t* buf = new uint8_t[length];
+    u8* buf = new u8[length];
+
+    // copying to our buffer
+    stream.read((char*)buf, length);
 
     // pushing to our buffer
     push_buffer(buf, length);

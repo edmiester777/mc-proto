@@ -5,8 +5,8 @@ using namespace minecraft;
 
 TEST(NBTLongArrayTag, ReadWriteStream)
 {
-    stringstream stream;
-    vector<int64_t> values;
+    mcstream stream;
+    vector<i64> values;
     for (int i = 0; i < 100; ++i)
     {
         values.push_back(i - 100l);

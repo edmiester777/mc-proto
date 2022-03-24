@@ -7,8 +7,8 @@ using namespace minecraft;
 TEST(NBTByteTag, ConstructFromStream)
 {
     const uint8_t byteVal = 0xF4;
-    stringstream stream;
-    stream.write((char*)&byteVal, 1);
+    mcstream stream;
+    stream << byteVal;
 
     NBTByteTag tag(stream);
 
@@ -24,7 +24,7 @@ TEST(NBTByteTag, WriteToStream)
     };
     NBTByteTag tag(byteVal);
 
-    stringstream stream;
+    mcstream stream;
     tag.write(stream);
 
     uint8_t readBytes[2];

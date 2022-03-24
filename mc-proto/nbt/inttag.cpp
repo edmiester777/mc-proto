@@ -1,44 +1,48 @@
 #include "inttag.h"
 
-using namespace minecraft;
-
-minecraft::NBTIntTag::NBTIntTag(istream& stream)
+namespace minecraft
 {
-    int32_t networkValue;
-    stream.read((char*)&networkValue, sizeof(int32_t));
-    m_value = ntohl(networkValue);
-}
-
-minecraft::NBTIntTag::NBTIntTag(int val)
-{
-    m_value = val;
-}
-
-void minecraft::NBTIntTag::operator=(const NBTIntTag& other)
-{
-    if (this != &other)
+    NBTIntTag::NBTIntTag(mcstream& stream)
     {
-        m_value = other.m_value;
+        stream >> *this;
     }
-}
 
-void minecraft::NBTIntTag::operator=(int32_t value)
-{
-    m_value = value;
-}
+    NBTIntTag::NBTIntTag(int val)
+    {
+        m_value = val;
+    }
 
-int32_t minecraft::NBTIntTag::value()
-{
-    return m_value;
-}
+    void NBTIntTag::operator=(const NBTIntTag& other)
+    {
+        if (this != &other)
+        {
+            m_value = other.m_value;
+        }
+    }
 
-void minecraft::NBTIntTag::write_data(ostream& stream) const
-{
-    int32_t networkValue = htonl(m_value);
-    stream.write((char*)&networkValue, sizeof(int32_t));
-}
+    void NBTIntTag::operator=(int value)
+    {
+        m_value = value;
+    }
 
-NBTTagTypes minecraft::NBTIntTag::type() const
-{
-    return NBTTagTypes::TAG_INT;
+    i32 NBTIntTag::value()
+    {
+        return m_value;
+    }
+
+    void NBTIntTag::write_data(mcstream& stream) const
+    {
+        stream << m_value;
+    }
+
+    NBTTagTypes NBTIntTag::type() const
+    {
+        return NBTTagTypes::TAG_INT;
+    }
+
+    mcstream& operator>>(mcstream& stream, NBTIntTag& tag)
+    {
+        return stream >> tag.m_value;
+    }
+
 }

@@ -29,6 +29,7 @@ namespace minecraft
         safebytebuffer& operator<<(const varint& i);
 
         friend std::ostream& operator<<(std::ostream& stream, const safebytebuffer& buf);
+        friend std::istream& operator>>(std::istream& stream, safebytebuffer& buf);
 
         void push_buffer(std::uint8_t* buf, int len);
         void push_stream(std::istream& stream);

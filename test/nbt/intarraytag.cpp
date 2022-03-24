@@ -5,8 +5,8 @@ using namespace minecraft;
 
 TEST(NBTIntArrayTag, ReadWriteStream)
 {
-    stringstream stream;
-    vector<int32_t> vals;
+    mcstream stream;
+    vector<i32> vals;
     for (int i = 0; i < 100; ++i)
     {
         vals.push_back(i - 50);
@@ -14,8 +14,8 @@ TEST(NBTIntArrayTag, ReadWriteStream)
 
     NBTIntArrayTag tag1(vals);
     tag1.write(stream);
-    uint8_t tagType;
-    stream.read((char*)&tagType, sizeof(uint8_t));
+    u8 tagType;
+    stream >> tagType;
     EXPECT_EQ(NBTTagTypes::TAG_INT_ARRAY, tagType);
 
     NBTIntArrayTag tag2(stream);

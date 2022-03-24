@@ -1,58 +1,57 @@
 #include "stringtag.h"
-#include "shorttag.h"
 
-using namespace minecraft;
-
-minecraft::NBTStringTag::NBTStringTag(istream& stream)
+namespace minecraft
 {
-    // first find the length of this string
-    NBTShortTag lengthTag(stream);
-
-    // read string of this length into buffer
-    char* rawstr = new char[lengthTag.value()];
-    stream.read(rawstr, lengthTag.value());
-
-    // strings from NBT streams are not null-termintated. We must construct
-    // it with an exact size.
-    m_value = string(rawstr, lengthTag.value());
-
-    // cleanup
-    delete[] rawstr;
-}
-
-minecraft::NBTStringTag::NBTStringTag(string value)
-{
-    m_value = value;
-}
-
-void minecraft::NBTStringTag::operator=(const NBTStringTag& other)
-{
-    if (this != &other)
+    NBTStringTag::NBTStringTag(mcstream& stream)
     {
-        m_value = other.m_value;
+        stream >> *this;
     }
-}
 
-void minecraft::NBTStringTag::operator=(const string& value)
-{
-    m_value = value;
-}
+    NBTStringTag::NBTStringTag(string value)
+    {
+        m_value = value;
+    }
 
-string& minecraft::NBTStringTag::value()
-{
-    return m_value;
-}
+    void NBTStringTag::operator=(const NBTStringTag& other)
+    {
+        if (this != &other)
+        {
+            m_value = other.m_value;
+        }
+    }
 
-void minecraft::NBTStringTag::write_data(ostream& stream) const
-{
-    // writing string length
-    NBTShortTag((int16_t)m_value.length()).write_data(stream);
+    void NBTStringTag::operator=(const string& value)
+    {
+        m_value = value;
+    }
 
-    // writing our data
-    stream.write(m_value.c_str(), m_value.length());
-}
+    string& NBTStringTag::value()
+    {
+        return m_value;
+    }
 
-NBTTagTypes minecraft::NBTStringTag::type() const
-{
-    return NBTTagTypes::TAG_STRING;
+    void NBTStringTag::write_data(mcstream& stream) const
+    {
+        u16 len = (u16)m_value.length();
+        stream << len;
+        stream.write(m_value.c_str(), len);
+    }
+
+    NBTTagTypes NBTStringTag::type() const
+    {
+        return NBTTagTypes::TAG_STRING;
+    }
+
+    mcstream& operator>>(mcstream& stream, NBTStringTag& tag)
+    {
+        u16 len;
+        stream >> len;
+
+        char* buf = new char[len];
+        stream.read(buf, len);
+        tag.m_value = string(buf, len);
+        delete[] buf;
+
+        return stream;
+    }
 }

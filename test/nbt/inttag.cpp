@@ -3,31 +3,13 @@
 
 using namespace minecraft;
 
-TEST(NBTIntTag, ConstructFromStream)
+TEST(NBTIntTag, ReadWriteStream)
 {
-    const int32_t expectedValue = 0x43F3DE;
-    const int32_t networkvalue = htonl(expectedValue);
+    const i32 expectedValue = 0x43F3DE;
+    NBTIntTag tag1(expectedValue);
+    mcstream stream;
+    tag1.write_data(stream);
+    NBTIntTag tag2(stream);
 
-    stringstream stream;
-    stream.write((char*)&networkvalue, sizeof(int32_t));
-
-    NBTIntTag tag(stream);
-    EXPECT_EQ(expectedValue, tag.value());
-}
-
-TEST(NBTIntTag, WriteToStream)
-{
-    const int32_t expectedValue = 0x43F3DE;
-    const int32_t expectedNetworkValue = htonl(expectedValue);
-    NBTIntTag tag(expectedValue);
-    stringstream stream;
-    tag.write(stream);
-
-    uint8_t tagType;
-    int32_t value;
-    stream.read((char*)&tagType, sizeof(uint8_t));
-    stream.read((char*)&value, sizeof(int32_t));
-
-    EXPECT_EQ(NBTTagTypes::TAG_INT, tagType);
-    EXPECT_EQ(expectedNetworkValue, value);
+    EXPECT_EQ(tag1.value(), tag2.value());
 }

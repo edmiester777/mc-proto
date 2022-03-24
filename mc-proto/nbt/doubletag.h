@@ -10,7 +10,7 @@ namespace minecraft
     class NBTDoubleTag : public NBTTagBase
     {
     public:
-        NBTDoubleTag(istream& stream);
+        NBTDoubleTag(mcstream& stream);
         NBTDoubleTag(double value);
         void operator=(const NBTDoubleTag& other);
         void operator=(double value);
@@ -18,7 +18,9 @@ namespace minecraft
         double value() const;
 
         virtual NBTTagTypes type() const override;        
-        virtual void write_data(ostream& stream) const override;
+        virtual void write_data(mcstream& stream) const override;
+
+        friend mcstream& operator>>(mcstream& stream, NBTDoubleTag& tag);
 
     private:
         double m_value;

@@ -13,7 +13,7 @@ TEST(NBTListTag, ReadWriteStream)
     }
 
     NBTListTag tag1(TAG_LONG, expectedValues);
-    stringstream stream;
+    mcstream stream;
     tag1.write_data(stream);
     NBTListTag tag2(stream);
 

@@ -10,17 +10,19 @@ namespace minecraft
     class NBTLongTag : public NBTTagBase
     {
     public:
-        NBTLongTag(istream& stream);
-        NBTLongTag(int64_t value);
+        NBTLongTag(mcstream& stream);
+        NBTLongTag(i64 value);
         void operator=(const NBTLongTag& other);
         void operator=(int64_t value);
 
-        int64_t value() const;
+        i64 value() const;
 
         virtual NBTTagTypes type() const override;
-        virtual void write_data(ostream& stream) const override;
+        virtual void write_data(mcstream& stream) const override;
+
+        friend mcstream& operator>>(mcstream& stream, NBTLongTag& tag);
 
     private:
-        int64_t m_value;
+        i64 m_value;
     };
 }

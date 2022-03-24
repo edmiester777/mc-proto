@@ -9,17 +9,19 @@ namespace minecraft
     class NBTIntTag : public NBTTagBase
     {
     public:
-        NBTIntTag(istream& stream);
+        NBTIntTag(mcstream& stream);
         NBTIntTag(int val);
         void operator=(const NBTIntTag& other);
-        void operator=(int32_t value);
+        void operator=(int value);
 
         int32_t value();
 
         virtual NBTTagTypes type() const override;
-        virtual void write_data(ostream& stream) const override;
+        virtual void write_data(mcstream& stream) const override;
+
+        friend mcstream& operator>>(mcstream& stream, NBTIntTag& tag);
 
     private:
-        int32_t m_value;
+        i32 m_value;
     };
 }

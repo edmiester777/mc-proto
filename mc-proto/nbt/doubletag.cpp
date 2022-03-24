@@ -1,44 +1,48 @@
 #include "doubletag.h"
 
-using namespace minecraft;
-
-minecraft::NBTDoubleTag::NBTDoubleTag(istream& stream)
+namespace minecraft
 {
-    uint64_t value;
-    stream.read((char*)&value, sizeof(uint64_t));
-    m_value = ntohd(value);
-}
-
-minecraft::NBTDoubleTag::NBTDoubleTag(double value)
-{
-    m_value = value;
-}
-
-void minecraft::NBTDoubleTag::operator=(const NBTDoubleTag& other)
-{
-    if (this != &other)
+    NBTDoubleTag::NBTDoubleTag(mcstream& stream)
     {
-        m_value = other.m_value;
+        stream >> *this;
     }
-}
 
-void minecraft::NBTDoubleTag::operator=(double value)
-{
-    m_value = value;
-}
+    NBTDoubleTag::NBTDoubleTag(double value)
+    {
+        m_value = value;
+    }
 
-double minecraft::NBTDoubleTag::value() const
-{
-    return m_value;
-}
+    void NBTDoubleTag::operator=(const NBTDoubleTag& other)
+    {
+        if (this != &other)
+        {
+            m_value = other.m_value;
+        }
+    }
 
-void minecraft::NBTDoubleTag::write_data(ostream& stream) const
-{
-    uint64_t networkValue = htond(m_value);
-    stream.write((char*)&networkValue, sizeof(uint64_t));
-}
+    void NBTDoubleTag::operator=(double value)
+    {
+        m_value = value;
+    }
 
-NBTTagTypes minecraft::NBTDoubleTag::type() const
-{
-    return NBTTagTypes::TAG_DOUBLE;
+    double NBTDoubleTag::value() const
+    {
+        return m_value;
+    }
+
+    void NBTDoubleTag::write_data(mcstream& stream) const
+    {
+        stream << m_value;
+    }
+
+    NBTTagTypes NBTDoubleTag::type() const
+    {
+        return NBTTagTypes::TAG_DOUBLE;
+    }
+
+    mcstream& operator>>(mcstream& stream, NBTDoubleTag& tag)
+    {
+        return stream >> tag.m_value;
+    }
+
 }

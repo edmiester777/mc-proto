@@ -1,43 +1,49 @@
 #include "bytetag.h"
 #include "tag.h"
 
-using namespace minecraft;
-
-minecraft::NBTByteTag::NBTByteTag(istream& data)
+namespace minecraft
 {
-    // read single byte from stream
-    data.read((char*)&m_byte, 1);
-}
-
-minecraft::NBTByteTag::NBTByteTag(uint8_t value)
-{
-    m_byte = value;
-}
-
-void minecraft::NBTByteTag::operator=(const NBTByteTag& other)
-{
-    if (this != &other)
+    NBTByteTag::NBTByteTag(mcstream& data)
     {
-        m_byte = other.m_byte;
+        // read single byte from stream
+        data >> *this;
     }
-}
 
-void minecraft::NBTByteTag::operator=(uint8_t value)
-{
-    m_byte = value;
-}
+    NBTByteTag::NBTByteTag(uint8_t value)
+    {
+        m_byte = value;
+    }
 
-uint8_t minecraft::NBTByteTag::value() const
-{
-    return m_byte;
-}
+    void NBTByteTag::operator=(const NBTByteTag& other)
+    {
+        if (this != &other)
+        {
+            m_byte = other.m_byte;
+        }
+    }
 
-void minecraft::NBTByteTag::write_data(ostream& stream) const
-{
-    stream.write((char*)&m_byte, sizeof(uint8_t));
-}
+    void NBTByteTag::operator=(uint8_t value)
+    {
+        m_byte = value;
+    }
 
-NBTTagTypes minecraft::NBTByteTag::type() const
-{
-    return NBTTagTypes::TAG_BYTE;
+    uint8_t NBTByteTag::value() const
+    {
+        return m_byte;
+    }
+
+    void NBTByteTag::write_data(mcstream& stream) const
+    {
+        stream << m_byte;
+    }
+
+    NBTTagTypes NBTByteTag::type() const
+    {
+        return NBTTagTypes::TAG_BYTE;
+    }
+
+    mcstream& operator>>(mcstream& stream, NBTByteTag& tag)
+    {
+        return stream >> tag.m_byte;
+    }
 }
