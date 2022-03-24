@@ -78,7 +78,7 @@ namespace minecraft
             << "\ttype: " << setw(4) << setfill(' ') << (int)m_entityType << " " << ENTITY_TYPE_TO_STRING[m_entityType] << endl
             << "\tposition (" << m_x << ", " << m_y << ", " << m_z << ")" << endl
             << "\tvelocity (" << m_velX << ", " << m_velY << ", " << m_velZ << ")" << endl
-            << "\tpitch: " << (short)m_pitch << " yaw: " << (short)m_yaw << " headYaw: " << (short)m_headYaw << endl;
+            << "\tpitch: " << (short)m_pitch << " yaw: " << (short)m_yaw << " headYaw: " << (short)m_headYaw;
 
         return stream.str();
     }
