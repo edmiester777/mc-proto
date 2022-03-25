@@ -116,9 +116,9 @@ void minecraft::safebytebuffer::push_buffer(std::uint8_t* buf, int len)
 void minecraft::safebytebuffer::push_stream(std::istream& stream)
 {
     // getting number of bytes left to read in stream
-    int start = stream.tellg();
+    int start = (int)stream.tellg();
     stream.seekg(0, ios::end);
-    int end = stream.tellg();
+    int end = (int)stream.tellg();
     stream.seekg(start);
     int length = end - start;
 

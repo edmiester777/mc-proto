@@ -6,7 +6,7 @@ using namespace minecraft;
 TEST(NBTShortTag, ReadWriteStream)
 {
     mcstream stream;
-    const i16 expectedVal = 0xDFC9;
+    const i16 expectedVal = 0x04FD;
     NBTShortTag tag1(expectedVal);
     tag1.write_data(stream);
     NBTShortTag tag2(stream);

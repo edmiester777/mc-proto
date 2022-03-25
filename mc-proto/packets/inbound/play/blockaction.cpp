@@ -2,10 +2,13 @@
 
 namespace minecraft
 {
+#pragma warning(push)
+#pragma warning(disable: 26495)
     InboundBlockActionPacket::InboundBlockActionPacket(mcstream& stream)
     {
         stream >> *this;
     }
+#pragma warning(pop)
 
     position InboundBlockActionPacket::pos() const
     {
