@@ -9,7 +9,7 @@
 - [ ] Statistics
 - [x] Acknowledge Player Digging
 - [x] Block Break Animation
-- [ ] Block Entity Data
+- [x] Block Entity Data
 - [ ] Block Action
 - [ ] Block Change
 - [ ] Boss Bar

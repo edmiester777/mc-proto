@@ -37,6 +37,9 @@ public:
     virtual void OnBlockBreakAnimation(Client& c, const InboundBlockBreakAnimationPacket& packet) override
     {
     }
+    virtual void OnBlockData(Client& c, const InboundBlockEntityDataPacket& packet) override
+    {
+    }
 };
 
 int main(int argc, char** argv)

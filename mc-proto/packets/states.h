@@ -47,6 +47,7 @@ namespace minecraft
         I_PLAYER_ANIATION = 0x06,
         I_ACKNOWLEGE_DIG = 0x08,
         I_BLOCK_BREAK_ANIM = 0x09,
+        I_BLOCK_ENTITY_DATA = 0x0A,
         I_PING = 0x30,
         I_KEEPALIVE = 0x21,
     };

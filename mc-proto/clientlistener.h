@@ -9,6 +9,7 @@
 #include "packets/inbound/play/entityanimation.h"
 #include "packets/inbound/play/ackdig.h"
 #include "packets/inbound/play/blockbreakanim.h"
+#include "packets/inbound/play/blockentitydata.h"
 
 namespace minecraft
 {
@@ -27,5 +28,6 @@ namespace minecraft
         virtual void OnPlayerAnimation(Client& c, const InboundEntityAnimationPacket& packet) = 0;
         virtual void OnBlockDigAcknowleged(Client& c, const InboundAckDigPacket& packet) = 0;
         virtual void OnBlockBreakAnimation(Client& c, const InboundBlockBreakAnimationPacket& packet) = 0;
+        virtual void OnBlockData(Client& c, const InboundBlockEntityDataPacket& packet) = 0;
     };
 }

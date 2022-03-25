@@ -214,6 +214,7 @@ void minecraft::Client::read_packet()
             SIMPLE_PACKET_READ(PlayPacketIds::I_PLAYER_ANIATION, InboundEntityAnimationPacket, OnPlayerAnimation)
             SIMPLE_PACKET_READ(PlayPacketIds::I_ACKNOWLEGE_DIG, InboundAckDigPacket, OnBlockDigAcknowleged)
             SIMPLE_PACKET_READ(PlayPacketIds::I_BLOCK_BREAK_ANIM, InboundBlockBreakAnimationPacket, OnBlockBreakAnimation)
+            SIMPLE_PACKET_READ(PlayPacketIds::I_BLOCK_ENTITY_DATA, InboundBlockEntityDataPacket, OnBlockData)
         case PlayPacketIds::I_PING:
             {
                 // received a ping... we must reply with a pong
