@@ -42,6 +42,7 @@ add_library (mc-proto STATIC
     "packets/inbound/play/ackdig.cpp"
     "packets/inbound/play/blockbreakanim.cpp"
     "packets/inbound/play/blockentitydata.cpp"
+    "packets/inbound/play/blockaction.cpp"
     "packets/outbound/handshake.cpp"
     "packets/outbound/status.cpp"
     "packets/outbound/login.cpp"

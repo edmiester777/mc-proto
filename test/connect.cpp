@@ -40,6 +40,9 @@ public:
     virtual void OnBlockData(Client& c, const InboundBlockEntityDataPacket& packet) override
     {
     }
+    virtual void OnBlockAction(Client& c, const InboundBlockActionPacket& packet) override
+    {
+    }
 };
 
 int main(int argc, char** argv)

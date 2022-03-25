@@ -10,7 +10,7 @@
 - [x] Acknowledge Player Digging
 - [x] Block Break Animation
 - [x] Block Entity Data
-- [ ] Block Action
+- [x] Block Action
 - [ ] Block Change
 - [ ] Boss Bar
 - [ ] Server Difficulty
