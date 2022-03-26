@@ -49,65 +49,77 @@ if path.exists(GEN_SOURCE_PATH):
 header_content = ''
 source_content = ''
 
-# parsing blocks
+# parsing reports
+registriesjson = json.load(open(path.join(REPORTS_DIR, 'registries.json')))
+blockregistry = {key: v['protocol_id'] for key, v in registriesjson['minecraft:block']['entries'].items()}
+
 blockjson = json.load(open(path.join(REPORTS_DIR, 'blocks.json')))
-blockdefs = {}
-for key in blockjson:
-    # list of numerical IDs related to this block
-    ids = [state['id'] for state in blockjson[key]['states']]
-    deflt = [state['id'] for state in blockjson[key]['states'] if 'default' in state and state['default']][0]
-    
-    # enumify this name
-    stripped_name = str(key[len('minecraft:'):])
-    enum_name = stripped_name.upper()
-    blockdefs[str(key)] = {
-        'enum_name': enum_name,
-        'ids': ids,
-        'default': deflt
-    }
 
 # generating data
-block_enum_name = 'BlockTypes'
-block_keys_strs = ''
-block_enum_data = ''
-block_str_to_enum_data = ''
-block_enum_to_str_data = ''
-for key in blockdefs.keys():
-    block = blockdefs[key]
-    block_keys_strs += f'char* __KEY_{block["enum_name"]} = (char*)"{key}";\n'
-    block_str_to_enum_data += f'{{ __KEY_{block["enum_name"]}, ({block_enum_name}){block["default"]} }},\n'
-    if len(block['ids']) > 1:
-        for i in range(len(block['ids'])):
-            block_enum_data += f'{block["enum_name"]}_{i + 1} = {block["ids"][i]}, {" //default" if block["default"] == block["ids"][i] else ""}\n'
-            block_enum_to_str_data += f'{{ ({block_enum_name}){block["ids"][i]}, __KEY_{block["enum_name"]} }},\n'
-    else:
-        block_enum_data += f'{block["enum_name"]} = {block["default"]},\n'
-        block_enum_to_str_data += f'{{ ({block_enum_name}){block["default"]}, __KEY_{block["enum_name"]} }},\n'
+block_type_enum_name = 'BlockTypes'
+block_states_enum_name = 'BlockStates'
+block_keys_strs = []
+block_types_enum_data = []
+block_states_enum_data = []
+block_state_to_type_map_content = []
+block_type_to_string_map_content = []
+block_entries = 0
+for key, block in blockjson.items():
+    enum_name = str(key[len('minecraft:'):]).upper()
 
+    block_keys_strs.append(f'char* __BLOCK_KEY_{enum_name} = (char*)"{key}";')
+    block_type_to_string_map_content.append(
+        f'{{ {block_type_enum_name}::{enum_name}, __BLOCK_KEY_{enum_name} }}'
+    )
+    block_types_enum_data.append(f'{enum_name} = {blockregistry[key]}') 
+    
+    for i in range(len(block['states'])):
+        block_entries += 1
+        gen_enum_name = enum_name
+        if i > 0:
+            gen_enum_name += f'_{i}'
+            
+        state = block['states'][i]
+        block_states_enum_data.append(f'{gen_enum_name} = {state["id"]}')
+        block_state_to_type_map_content.append(
+            f'{{ ({block_states_enum_name}){state["id"]}, ({block_type_enum_name}){blockregistry[key]} }}'
+        )
 
+nl = '\n'
+nlcomma = ',\n'
 header_content += \
 f"""
-enum class {block_enum_name} {{{block_enum_data}}};
+#define NUM_GLOBAL_BLOCK_ENTRIES {len(blockregistry)}
+#define NUM_GLOBAL_BLOCK_STATE_ENTRIES {block_entries}
 
-{block_enum_name} get_block_type_from_string(const char* s);
-const char* get_string_from_block_type({block_enum_name} type);
+enum class {block_type_enum_name}
+{{
+{nlcomma.join(block_types_enum_data)}
+}};
+
+enum class {block_states_enum_name} {{
+{nlcomma.join(block_states_enum_data)}
+}};
+
+extern {block_type_enum_name} block_type_from_state({block_states_enum_name} state);
+extern std::string block_type_to_string({block_type_enum_name} type);
 """
 
 source_content += \
 f"""
-{block_keys_strs}
+{nl.join(block_keys_strs)}
 
-std::map<char*, {block_enum_name}, __cmp_chr_ptr> BLOCK_STRING_TO_DEFAULT_TYPE = {{ {block_str_to_enum_data} }};
-std::map<{block_enum_name}, char*> BLOCK_TYPE_TO_STRING_MAP = {{ {block_enum_to_str_data} }};
+std::map<{block_states_enum_name}, {block_type_enum_name}> BLOCK_STATE_TO_TYPE_MAP = {{ {nlcomma.join(block_state_to_type_map_content)} }};
+std::map<{block_type_enum_name}, char*> BLOCK_TYPE_TO_STRING_MAP = {{ {nlcomma.join(block_type_to_string_map_content)} }};
 
-{block_enum_name} get_block_type_from_string(const char* s)
+{block_type_enum_name} block_type_from_state({block_states_enum_name} state)
 {{
-    return BLOCK_STRING_TO_DEFAULT_TYPE[(char*)s];
+    return BLOCK_STATE_TO_TYPE_MAP[state];
 }}
 
-const char* get_string_from_block_type({block_enum_name} type)
+std::string block_type_to_string({block_type_enum_name} type)
 {{
-    return BLOCK_TYPE_TO_STRING_MAP[type];
+    return std::string(BLOCK_TYPE_TO_STRING_MAP[type]);
 }}
 """
 
@@ -122,7 +134,6 @@ hfile.write(f'''
 {FILE_HEADER_COMMENT}
 
 #include <string>
-#include <map>
 
 namespace minecraft
 {{
@@ -134,14 +145,15 @@ sfile.write(f'''
 {FILE_HEADER_COMMENT}
 
 #include "generated.h"
+#include <map>
 
 namespace
 {{
     struct __cmp_chr_ptr
     {{
-        bool operator()(char const* a, char const* b) const
+        bool operator()(const char* a, const char* b) const
         {{
-            return std::strcmp(a, b) < 0;
+            return strcmp(a, b) < 0;
         }}
     }};
 }}
