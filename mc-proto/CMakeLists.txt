@@ -1,4 +1,4 @@
-﻿# CMakeList.txt : CMake project for mc-proto, include source and define
+# CMakeList.txt : CMake project for mc-proto, include source and define
 # project specific logic here.
 #
 cmake_minimum_required (VERSION 3.8)
@@ -13,6 +13,7 @@ add_library (mc-proto STATIC
     "uuid.cpp"
 
     "minecraft/entitytypes.cpp"
+    "minecraft/generated.cpp"
 
     "nbt/tag.cpp"
     "nbt/compoundtag.cpp"

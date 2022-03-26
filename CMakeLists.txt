@@ -1,7 +1,16 @@
 ﻿# CMakeList.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
 #
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.19)
+
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+# Bootstrapping project
+message(STATUS "Bootstrapping project...")
+execute_process(
+    COMMAND ${Python3_EXECUTABLE} ./bootstrap.py
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
 
 project ("mc-proto")
 
@@ -20,15 +29,10 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-include_directories(
-    "third-party/cpp-nbt"
-)
-
 # Include sub-projects.
 add_subdirectory ("third-party/glog")
 add_subdirectory ("third-party/socketpp")
 add_subdirectory ("third-party/zlib")
-
 
 include_directories(
     "."
