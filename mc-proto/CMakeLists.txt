@@ -1,4 +1,4 @@
-# CMakeList.txt : CMake project for mc-proto, include source and define
+﻿# CMakeList.txt : CMake project for mc-proto, include source and define
 # project specific logic here.
 #
 cmake_minimum_required (VERSION 3.8)
@@ -11,8 +11,11 @@ add_library (mc-proto STATIC
     "compressionhelper.cpp"
     "mcstream.cpp"
     "uuid.cpp"
+    "bitset.cpp"
 
+    "minecraft/block.cpp"
     "minecraft/entitytypes.cpp"
+    "minecraft/palettedcontainer.cpp"
     "minecraft/generated.cpp"
 
     "nbt/tag.cpp"
@@ -44,6 +47,7 @@ add_library (mc-proto STATIC
     "packets/inbound/play/blockbreakanim.cpp"
     "packets/inbound/play/blockentitydata.cpp"
     "packets/inbound/play/blockaction.cpp"
+    "packets/inbound/play/chunkdata.cpp"
     "packets/outbound/handshake.cpp"
     "packets/outbound/status.cpp"
     "packets/outbound/login.cpp"

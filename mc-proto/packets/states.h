@@ -49,7 +49,8 @@ namespace minecraft
         I_BLOCK_BREAK_ANIM = 0x09,
         I_BLOCK_ENTITY_DATA = 0x0A,
         I_BLOCK_ACTION = 0x0B,
-        I_PING = 0x30,
         I_KEEPALIVE = 0x21,
+        I_PING = 0x30,
+        I_CHUNK_DATA = 0x22,
     };
 }

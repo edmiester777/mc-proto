@@ -456,4 +456,5 @@ FodyWeavers.xsd
 
 out/
 bootstrap/
+enc_temp_folder/
 *generated.*

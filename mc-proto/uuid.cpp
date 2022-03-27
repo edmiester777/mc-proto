@@ -3,8 +3,6 @@
 #include <iomanip>
 #include <glog/logging.h>
 
-#define between(v, l, h) (v >= l && v <= h)
-
 namespace minecraft
 {
     uint8_t hex2byte(char c)

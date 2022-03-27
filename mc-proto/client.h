@@ -22,11 +22,13 @@ namespace minecraft
     class Client
     {
     public:
-        Client(string host, int16_t port, shared_ptr<ClientEventListener> listener);
+        Client(string host, i16 port, sp<ClientEventListener> listener);
         virtual ~Client();
 
-        uint64_t getNumPacketsSent();
-        uint64_t getNumPacketsReceived();
+        u64 getNumPacketsSent();
+        u64 getNumPacketsReceived();
+
+        bool overworld() const;
 
         bool connect();
         void login(string username);
@@ -42,6 +44,7 @@ namespace minecraft
     protected:
         void read_packet();
     private:
+        bool m_overworld;
         States m_state;
         string m_host;
         in_port_t m_port;
@@ -51,6 +54,6 @@ namespace minecraft
         mutex m_writeMutex;
         uint64_t m_numPacketsSent;
         uint64_t m_numPacketsReceived;
-        shared_ptr<ClientEventListener> m_listener;
+        sp<ClientEventListener> m_listener;
     };
 }

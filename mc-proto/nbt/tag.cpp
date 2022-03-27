@@ -52,6 +52,10 @@ namespace minecraft
             CHECK_CONSTRUCT_TAG_TYPE(TAG_LONG, NBTLongTag, stream)
             CHECK_CONSTRUCT_TAG_TYPE(TAG_SHORT, NBTShortTag, stream)
             CHECK_CONSTRUCT_TAG_TYPE(TAG_STRING, NBTStringTag, stream)
+        case TAG_END:
+            // immediate TAG_END received, assume empty compound tag
+            return NBTTagPtr(new NBTCompoundTag());
+            break;
         default:
             LOG(WARNING)
                 << "Tried to parse invalid tag type (" << type << ")";

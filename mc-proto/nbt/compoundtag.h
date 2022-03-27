@@ -10,6 +10,7 @@ namespace minecraft
     class NBTCompoundTag : public NBTTagBase
     {
     public:
+        NBTCompoundTag();
         NBTCompoundTag(mcstream& stream);
         NBTCompoundTag(const string& name, const map<string, NBTTagPtr>& value);
 
