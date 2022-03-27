@@ -3,6 +3,10 @@
 
 namespace minecraft
 {
+    Palette::Palette(u8 entryBits) : m_bitsPerEntry(entryBits)
+    {
+    }
+
     Palette::Palette(u8 entryBits, mcstream& stream) : m_bitsPerEntry(entryBits)
     {
     }
@@ -15,6 +19,17 @@ namespace minecraft
     BlockStates Palette::blockStateFromId(u32 id) const
     {
         return (BlockStates)id;
+    }
+
+    SingleValuedPalette::SingleValuedPalette(mcstream& stream) : Palette(0)
+    {
+        stream >> m_value;
+    }
+
+    BlockStates SingleValuedPalette::blockStateFromId(u32 id) const
+    {
+        // TODO: implement
+        return (BlockStates)m_value.val();
     }
 
     IndirectPalette::IndirectPalette(u8 entryBits, mcstream& stream)
@@ -35,6 +50,10 @@ namespace minecraft
     BlockStates IndirectPalette::blockStateFromId(u32 id) const
     {
         return m_idToStateMap.at(id);
+    }
+
+    PalettedContainer::PalettedContainer()
+    {
     }
 
     PalettedContainer::PalettedContainer(mcstream& stream)
@@ -71,12 +90,14 @@ namespace minecraft
         u8 bitsPerEntry;
         stream >> bitsPerEntry;
 
-        if (between(bitsPerEntry, 0, 4))
-            container.m_palette = shared_ptr<Palette>(new IndirectPalette(4, stream));
+        if (bitsPerEntry == 0)
+            container.m_palette = sp<Palette>(new SingleValuedPalette(stream));
+        else if (between(bitsPerEntry, 1, 4))
+            container.m_palette = sp<Palette>(new IndirectPalette(4, stream));
         else if (between(bitsPerEntry, 5, 8))
-            container.m_palette = shared_ptr<Palette>(new IndirectPalette(8, stream));
+            container.m_palette = sp<Palette>(new IndirectPalette(8, stream));
         else
-            container.m_palette = shared_ptr<Palette>(new Palette(bitsPerEntry, stream));
+            container.m_palette = sp<Palette>(new Palette(bitsPerEntry, stream));
 
         // reading long data
         varint numlongs;
@@ -88,6 +109,9 @@ namespace minecraft
         return stream;
     }
 
+    ChunkBlockPalettedContainer::ChunkBlockPalettedContainer() : PalettedContainer()
+    {
+    }
 
     ChunkBlockPalettedContainer::ChunkBlockPalettedContainer(mcstream& stream)
         : PalettedContainer(stream)

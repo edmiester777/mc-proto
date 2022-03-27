@@ -6,6 +6,23 @@
 
 namespace minecraft
 {
+    class ChunkSection
+    {
+    public:
+        ChunkSection(mcstream& stream);
+
+        int numBlocks() const;
+        const ChunkBlockPalettedContainer& chunkPalette() const;
+        const PalettedContainer& biomePalette() const;
+
+        friend mcstream& operator>>(mcstream& stream, ChunkSection& c);
+
+    private:
+        u16 m_numBlocks;
+        ChunkBlockPalettedContainer m_blockPalette;
+        PalettedContainer m_biomePalette;
+    };
+
     class InboundChunkDataPacket : public Packet
     {
         PACKET_IMPL(InboundChunkDataPacket, States::PLAY, PlayPacketIds::I_CHUNK_DATA)
@@ -20,6 +37,7 @@ namespace minecraft
 
         int chunkX() const;
         int chunkZ() const;
+        int isFullChunk() const;
         sp<NBTCompoundTag> heightmaps() const;
         bool trustEdges() const;
         bitset skylightMask() const;
@@ -36,8 +54,9 @@ namespace minecraft
     private:
         int m_chunkX;
         int m_chunkZ;
+        bool m_fullChunkData;
         sp<NBTCompoundTag> m_heightmaps;
-        sp<ChunkBlockPalettedContainer> m_chunkPalettes[MC_NUM_VERTICAL_CHUNKS];
+        sp<ChunkSection> m_chunkSections[MC_NUM_VERTICAL_CHUNKS];
         bool m_trustEdges;
         bitset m_skylightMask;
         bitset m_blockLightMask;

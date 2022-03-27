@@ -13,6 +13,7 @@ namespace minecraft
     class Palette
     {
     public:
+        Palette(u8 entryBits);
         Palette(u8 entryBits, mcstream& stream);
 
         u8 entryBits() const;
@@ -22,6 +23,16 @@ namespace minecraft
         u8 m_bitsPerEntry;
     };
 
+    class SingleValuedPalette : public Palette
+    {
+    public:
+        SingleValuedPalette(mcstream& stream);
+
+        virtual BlockStates blockStateFromId(u32 id) const override;
+
+    private:
+        varint m_value;
+    };
 
     class IndirectPalette : public Palette
     {
@@ -43,6 +54,7 @@ namespace minecraft
     class PalettedContainer
     {
     public:
+        PalettedContainer();
         PalettedContainer(mcstream& stream);
 
         u32 read(int start, int offset);
@@ -50,7 +62,7 @@ namespace minecraft
         friend mcstream& operator>>(mcstream& stream, PalettedContainer& container);
 
     protected:
-        shared_ptr<Palette> m_palette;
+        sp<Palette> m_palette;
 
     private:
         vector<u64> m_data;
@@ -59,6 +71,7 @@ namespace minecraft
     class ChunkBlockPalettedContainer : public PalettedContainer
     {
     public:
+        ChunkBlockPalettedContainer();
         ChunkBlockPalettedContainer(mcstream& stream);
 
         u32 readBlockFromCoords(int x, int y, int z);

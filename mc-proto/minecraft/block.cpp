@@ -13,7 +13,7 @@ namespace minecraft
     {
     }
 
-    Block::Block(int x, int y, int z, int type, shared_ptr<NBTCompoundTag> data)
+    Block::Block(int x, int y, int z, int type, NBTTagPtr data)
         : m_x(x)
         , m_y(y)
         , m_z(z)
@@ -47,7 +47,7 @@ namespace minecraft
         return m_type.val();
     }
 
-    shared_ptr<NBTCompoundTag> Block::data() const
+    NBTTagPtr Block::data() const
     {
         return m_data;
     }
@@ -56,30 +56,31 @@ namespace minecraft
     {
         u8 xz;
         u16 y;
-        stream >> xz >> y
-            >> b.m_type;
+        //stream >> xz >> y
+        //    >> b.m_type;
+        stream >> b.m_type;
 
         // unpacking x and z
-        i8 xb = (xz >> 4) & 15;
-        i8 zb = xz & 15;
+        //u8 xb = (xz >> 4) & 15;
+        //u8 zb = xz & 15;
 
-        b.m_data = sp<NBTCompoundTag>(new NBTCompoundTag(stream));
-        b.m_x = xb;
-        b.m_y = y;
-        b.m_z = zb;
+        //b.m_data = sp<NBTCompoundTag>(new NBTCompoundTag(stream));
+        b.m_data = read_nbt_from_stream(stream);
+        //b.m_x = (int)xb;
+        //b.m_y = (int)y;
+        //b.m_z = (int)zb;
 
         return stream;
     }
 
-    std::ostream& operator<<(std::ostream& stream, Block& b)
+    std::ostream& operator<<(std::ostream& stream, const Block& b)
     {
         // Ideally I'd like to have a nested print structure for when it is serialized
         // as a nested object, using something like indent_facet, but I don't have the
         // patience right now to do such a task.
         return stream << endl
-            << "\t--------------------------------------------------------------"
             << "\tposition: (" << b.m_x << ", " << b.m_y << ", " << b.m_z << ")" << endl
             << "\ttype: " << b.m_type.val() << endl
-            << "\tdata root tag name:" << b.m_data->name();
+            << "\tdata nbt type:" << (int)b.m_data->type();
     }
 }

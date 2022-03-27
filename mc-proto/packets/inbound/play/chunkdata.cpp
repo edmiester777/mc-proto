@@ -2,6 +2,36 @@
 
 namespace minecraft
 {
+    ChunkSection::ChunkSection(mcstream& stream)
+    {
+        stream >> *this;
+    }
+
+    int ChunkSection::numBlocks() const
+    {
+        return m_numBlocks;
+    }
+
+    const ChunkBlockPalettedContainer& ChunkSection::chunkPalette() const
+    {
+        return m_blockPalette;
+    }
+
+    const PalettedContainer& ChunkSection::biomePalette() const
+    {
+        return m_biomePalette;
+    }
+
+    mcstream& operator>>(mcstream& stream, ChunkSection& c)
+    {
+        stream
+            >> c.m_numBlocks
+            >> c.m_blockPalette >> c.m_biomePalette;
+
+        return stream;
+    }
+
+
     InboundChunkDataPacket::InboundChunkDataPacket(mcstream& stream, bool overworld)
     {
         stream >> m_chunkX >> m_chunkZ;
@@ -13,7 +43,7 @@ namespace minecraft
         stream >> len;
         for (int i = 0; i < MC_NUM_VERTICAL_CHUNKS; ++i)
         {
-            m_chunkPalettes[i] = sp<ChunkBlockPalettedContainer>(new ChunkBlockPalettedContainer(stream));
+            m_chunkSections[i] = sp<ChunkSection>(new ChunkSection(stream));
         }
 
         // reading block entries
@@ -67,6 +97,11 @@ namespace minecraft
     int InboundChunkDataPacket::chunkZ() const
     {
         return m_chunkZ;
+    }
+
+    int InboundChunkDataPacket::isFullChunk() const
+    {
+        return m_fullChunkData;
     }
 
     sp<NBTCompoundTag> InboundChunkDataPacket::heightmaps() const
@@ -123,6 +158,11 @@ namespace minecraft
             << "\tblock count: " << m_blocks.size() << endl
             << "\tsky light array count: " << m_skylightArrays.size() << endl
             << "\tblock light array count: " << m_blockLightArrays.size();
+
+        for (int i = 0; i < m_blocks.size(); ++i)
+        {
+            s << m_blocks[i];
+        }
         return s.str();
     }
 }
