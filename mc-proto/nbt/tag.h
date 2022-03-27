@@ -37,7 +37,7 @@ namespace minecraft
         friend mcstream& operator<<(mcstream& stream, NBTTagBase& tag);
     };
 
-    typedef shared_ptr<NBTTagBase> NBTTagPtr;
+    using NBTTagPtr = std::shared_ptr<NBTTagBase>;
 
     /**
      * Read a generic NBT from a stream. This includes loading the initial type

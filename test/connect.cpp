@@ -43,6 +43,10 @@ public:
     virtual void OnBlockAction(Client& c, const InboundBlockActionPacket& packet) override
     {
     }
+
+    virtual void OnChunkData(Client& c, const InboundChunkDataPacket& packet) override
+    {
+    }
 };
 
 int main(int argc, char** argv)

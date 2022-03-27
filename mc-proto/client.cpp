@@ -12,7 +12,7 @@
 #define SIMPLE_PACKET_READ(id, cls, call) \
     case (id): \
     { \
-        shared_ptr<cls> tmppacket = shared_ptr<cls>(new cls(stream)); \
+        sp<cls> tmppacket = sp<cls>(new cls(stream)); \
         m_listener->call(*this, *tmppacket); \
         packet = tmppacket; \
         break; \
@@ -20,8 +20,9 @@
 
 using namespace minecraft;
 
-minecraft::Client::Client(string host, int16_t port, shared_ptr<ClientEventListener> listener)
-    : m_host(host)
+minecraft::Client::Client(string host, i16 port, sp<ClientEventListener> listener)
+    : m_overworld(true)
+    , m_host(host)
     , m_port(port)
     , m_listener(listener)
     , m_state(States::HANDSHAKING)
@@ -49,6 +50,11 @@ uint64_t minecraft::Client::getNumPacketsReceived()
     uint64_t packets = m_numPacketsReceived;
     m_mainMutex.unlock();
     return packets;
+}
+
+bool minecraft::Client::overworld() const
+{
+    return m_overworld;
 }
 
 bool minecraft::Client::connect()
@@ -219,7 +225,7 @@ void minecraft::Client::read_packet()
         case PlayPacketIds::I_PING:
             {
                 // received a ping... we must reply with a pong
-                shared_ptr<InboundPingPacket> pingpacket(new InboundPingPacket(stream));
+                sp<InboundPingPacket> pingpacket(new InboundPingPacket(stream));
                 write_packet(OutboundPingPacket(pingpacket->pingId()));
                 packet = pingpacket;
                 break;
@@ -227,9 +233,16 @@ void minecraft::Client::read_packet()
         case PlayPacketIds::I_KEEPALIVE:
             {
                 // received keepalive... does same thing as ping
-                shared_ptr<InboundKeepalivePacket> keepalive(new InboundKeepalivePacket(stream));
+                sp<InboundKeepalivePacket> keepalive(new InboundKeepalivePacket(stream));
                 write_packet(OutboundKeepalivePacket(keepalive->pingId()));
                 packet = keepalive;
+                break;
+            }
+        case PlayPacketIds::I_CHUNK_DATA:
+            {
+                sp<InboundChunkDataPacket> chunk(new InboundChunkDataPacket(stream, m_overworld));
+                m_listener->OnChunkData(*this, *chunk);
+                packet = chunk;
                 break;
             }
         }

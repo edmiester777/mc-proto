@@ -1,6 +1,12 @@
 #pragma once
 
+#define between(v, l, h) (v >= l && v <= h)
+
 #define MC_PROTOCOL_VERSION 758
+
+#define MC_NUM_VERTICAL_CHUNKS 24
+#define MC_CHUNK_WIDTH 16
+#define MC_CHUNK_HEIGHT 16
 
 #define VLOG_DEBUG 5
 #define VLOG_INFO 4
@@ -15,11 +21,13 @@
 #include <memory>
 #include <map>
 #include <vector>
+#include <tuple>
 #include "safebytebuffer.h"
 #include "mcstream.h"
 #include "varint.h"
 #include "position.h"
 #include "uuid.h"
+#include "bitset.h"
 #include "minecraft/entitytypes.h"
 
 #if WIN32
@@ -34,14 +42,17 @@
 
 namespace minecraft
 {
-    typedef int8_t i8;
-    typedef uint8_t u8;
-    typedef int16_t i16;
-    typedef uint16_t u16;
-    typedef int32_t i32;
-    typedef uint32_t u32;
-    typedef int64_t i64;
-    typedef uint64_t u64;
+    using i8 = int8_t;
+    using u8 = uint8_t;
+    using i16 = int16_t;
+    using u16 = uint16_t;
+    using i32 = int32_t;
+    using u32 = uint32_t;
+    using i64 = int64_t;
+    using u64 = uint64_t;
 
-    typedef u8 angle;
+    using angle = u8;
+
+    template <typename t>
+    using sp = std::shared_ptr<t>;
 }

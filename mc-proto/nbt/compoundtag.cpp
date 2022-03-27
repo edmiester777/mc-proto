@@ -1,10 +1,16 @@
 #include "compoundtag.h"
+#include "compoundtag.h"
 #include "stringtag.h"
 #include "bytetag.h"
 #include <glog/logging.h>
 
 namespace minecraft
 {
+    NBTCompoundTag::NBTCompoundTag()
+        : m_name("<EMPTY>")
+    {
+    }
+
     NBTCompoundTag::NBTCompoundTag(mcstream& stream)
     {
         stream >> *this;

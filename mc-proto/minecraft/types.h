@@ -1,6 +1,9 @@
 #pragma once
 
+#include "block.h"
 #include "entitytypes.h"
+#include "palettedcontainer.h"
+#include "generated.h"
 
 namespace minecraft
 {

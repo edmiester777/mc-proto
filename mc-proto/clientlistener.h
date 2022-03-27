@@ -11,6 +11,7 @@
 #include "packets/inbound/play/blockbreakanim.h"
 #include "packets/inbound/play/blockentitydata.h"
 #include "packets/inbound/play/blockaction.h"
+#include "packets/inbound/play/chunkdata.h"
 
 namespace minecraft
 {
@@ -31,5 +32,6 @@ namespace minecraft
         virtual void OnBlockBreakAnimation(Client& c, const InboundBlockBreakAnimationPacket& packet) = 0;
         virtual void OnBlockData(Client& c, const InboundBlockEntityDataPacket& packet) = 0;
         virtual void OnBlockAction(Client& c, const InboundBlockActionPacket& packet) = 0;
+        virtual void OnChunkData(Client& c, const InboundChunkDataPacket& packet) = 0;
     };
 }

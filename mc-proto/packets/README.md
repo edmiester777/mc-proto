@@ -33,7 +33,7 @@
 - [ ] Open Horse Window
 - [ ] Initialize World Border
 - [x] Keep Alive (clientbound)
-- [ ] Chunk Data And Update Light
+- [x] Chunk Data And Update Light
 - [ ] Effect
 - [ ] Particle
 - [ ] Update Light
