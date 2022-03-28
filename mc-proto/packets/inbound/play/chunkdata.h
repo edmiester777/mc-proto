@@ -12,8 +12,8 @@ namespace minecraft
         ChunkSection(mcstream& stream);
 
         int numBlocks() const;
-        const ChunkBlockPalettedContainer& chunkPalette() const;
-        const PalettedContainer& biomePalette() const;
+        ChunkBlockPalettedContainer& chunkPalette();
+        PalettedContainer& biomePalette();
 
         friend mcstream& operator>>(mcstream& stream, ChunkSection& c);
 
@@ -48,6 +48,16 @@ namespace minecraft
         vector<vector<u8>>& blockLightArrays();
         vector<Block>& blocks();
 
+        /**
+         * Get the type of block at a given local coordinate.
+         * 
+         * Keep in mind, this is a LOCAL coordinate. Also note that
+         * this is for an entire "Chunk" and not a chunk section, so
+         * it has a stack of individual chunk sections vertically from
+         * bedrock to world height.
+         */
+        BlockTypes blockTypeAt(int x, int y, int z) const;
+        BlockStates blockStateAt(int x, int y, int z) const;
 
         string to_string() const override;
 

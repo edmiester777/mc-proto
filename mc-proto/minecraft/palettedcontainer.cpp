@@ -65,7 +65,9 @@ namespace minecraft
     {
         u32 mask = (1 << m_palette->entryBits()) - 1;
         u32 val;
-        if (start == m_data.size() - 1)
+        if (m_data.size() == 0)
+            val = (u32)m_palette->blockStateFromId(0);
+        else if (start == m_data.size() - 1)
             val = m_data[start] >> offset;
         else
         {
@@ -92,10 +94,8 @@ namespace minecraft
 
         if (bitsPerEntry == 0)
             container.m_palette = sp<Palette>(new SingleValuedPalette(stream));
-        else if (between(bitsPerEntry, 1, 4))
-            container.m_palette = sp<Palette>(new IndirectPalette(4, stream));
-        else if (between(bitsPerEntry, 5, 8))
-            container.m_palette = sp<Palette>(new IndirectPalette(8, stream));
+        else if (between(bitsPerEntry, 1, 8))
+            container.m_palette = sp<Palette>(new IndirectPalette(bitsPerEntry, stream));
         else
             container.m_palette = sp<Palette>(new Palette(bitsPerEntry, stream));
 

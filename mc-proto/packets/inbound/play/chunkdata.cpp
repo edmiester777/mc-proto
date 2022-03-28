@@ -12,12 +12,12 @@ namespace minecraft
         return m_numBlocks;
     }
 
-    const ChunkBlockPalettedContainer& ChunkSection::chunkPalette() const
+    ChunkBlockPalettedContainer& ChunkSection::chunkPalette()
     {
         return m_blockPalette;
     }
 
-    const PalettedContainer& ChunkSection::biomePalette() const
+    PalettedContainer& ChunkSection::biomePalette()
     {
         return m_biomePalette;
     }
@@ -147,6 +147,20 @@ namespace minecraft
     vector<Block>& InboundChunkDataPacket::blocks()
     {
         return m_blocks;
+    }
+
+    BlockTypes InboundChunkDataPacket::blockTypeAt(int x, int y, int z) const
+    {
+        return block_type_from_state(blockStateAt(x, y, z));
+    }
+
+    BlockStates InboundChunkDataPacket::blockStateAt(int x, int y, int z) const
+    {
+        int paletteIndex = y / MC_NUM_VERTICAL_CHUNKS;
+        int ny = y % MC_CHUNK_HEIGHT;
+        return (BlockStates)m_chunkSections[paletteIndex]
+            ->chunkPalette()
+            .readBlockFromCoords(x, ny, z);
     }
 
     string InboundChunkDataPacket::to_string() const
