@@ -55,4 +55,7 @@ namespace minecraft
 
     template <typename t>
     using sp = std::shared_ptr<t>;
+
+    template <typename t>
+    using unptr = std::unique_ptr<t>;
 }

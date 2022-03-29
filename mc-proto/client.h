@@ -3,7 +3,6 @@
 #include <string>
 #include <mutex>
 #include <memory>
-#include <sockpp/tcp_connector.h>
 #include "clientlistener.h"
 
 namespace minecraft
@@ -47,9 +46,9 @@ namespace minecraft
         bool m_overworld;
         States m_state;
         string m_host;
-        in_port_t m_port;
-        sockpp::socket_initializer m_sockInitializer;
-        sockpp::tcp_connector m_connector;
+        u16 m_port;
+        void* m_sockInitializer;
+        void* m_connector;
         mutex m_mainMutex;
         mutex m_writeMutex;
         uint64_t m_numPacketsSent;

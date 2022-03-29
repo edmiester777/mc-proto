@@ -46,6 +46,13 @@ public:
 
     virtual void OnChunkData(Client& c, const InboundChunkDataPacket& packet) override
     {
+        for (int x = 0; x < MC_CHUNK_WIDTH; ++x)
+            for (int y = 0; y < MC_CHUNK_HEIGHT * MC_NUM_VERTICAL_CHUNKS; ++y)
+                for (int z = 0; z < MC_CHUNK_WIDTH; ++z)
+                {
+                    auto btype = packet.blockTypeAt(x, y, z);
+                    auto t = btype;
+                }
     }
 };
 

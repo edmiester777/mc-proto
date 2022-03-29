@@ -1,4 +1,5 @@
 #include "client.h"
+#include <sockpp/tcp_connector.h>
 #include <glog/logging.h>
 #include "packets/inbound/status.h"
 #include "packets/inbound/login.h"
@@ -18,6 +19,8 @@
         break; \
     }
 
+#define conn ((sockpp::tcp_connector*)m_connector)
+
 using namespace minecraft;
 
 minecraft::Client::Client(string host, i16 port, sp<ClientEventListener> listener)
@@ -28,12 +31,17 @@ minecraft::Client::Client(string host, i16 port, sp<ClientEventListener> listene
     , m_state(States::HANDSHAKING)
     , m_numPacketsSent(0)
     , m_numPacketsReceived(0)
+    , m_connector(nullptr)
+    , m_sockInitializer(nullptr)
 {
 }
 
 minecraft::Client::~Client()
 {
-
+    if (m_connector != nullptr)
+        delete m_connector;
+    if (m_sockInitializer != nullptr)
+        delete m_sockInitializer;
 }
 
 uint64_t minecraft::Client::getNumPacketsSent()
@@ -59,14 +67,15 @@ bool minecraft::Client::overworld() const
 
 bool minecraft::Client::connect()
 {
-    m_connector = sockpp::tcp_connector({m_host, m_port});
+    m_sockInitializer = new sockpp::socket_initializer();
+    m_connector = new sockpp::tcp_connector({m_host, m_port});
 
-    if (!m_connector.is_connected())
+    if (!conn->is_connected())
     {
         LOG(WARNING)
             << "Failed to connect to TCP "
             << m_host << ":" << m_port
-            << " with error: " << m_connector.last_error_str();
+            << " with error: " << conn->last_error_str();
 
         return false;
     }
@@ -78,7 +87,7 @@ bool minecraft::Client::connect()
 
     LOG(INFO)
         << "Created connection to "
-        << m_connector.address();
+        << conn->address();
 
     return true;
 }
@@ -97,7 +106,7 @@ void minecraft::Client::run()
     {
         VLOG(VLOG_DEBUG) << "Attempting to read packet...";
         m_mainMutex.lock();
-        bool connected = m_connector.is_connected();
+        bool connected = conn->is_connected();
         m_mainMutex.unlock();
 
         if (!connected)
@@ -107,13 +116,13 @@ void minecraft::Client::run()
     }
 
     LOG(INFO)
-        << "Connection to " << m_connector.address() << " has been broken.";
+        << "Connection to " << conn->address() << " has been broken.";
 }
 
 void minecraft::Client::write_packet(const Packet& packet)
 {
     m_mainMutex.lock();
-    bool connected = m_connector.is_open();
+    bool connected = conn->is_open();
     m_mainMutex.unlock();
 
     if (!connected)
@@ -130,7 +139,7 @@ void minecraft::Client::write_packet(const Packet& packet)
     safebytebuffer lengthbuffer;
     lengthbuffer.push(varint((int)buffer.size()));
     VLOG(VLOG_DEBUG) << "Outgoing packet length: " << buffer.size();
-    int written = (int)m_connector.write_n(lengthbuffer.data(), lengthbuffer.size());
+    int written = (int)conn->write_n(lengthbuffer.data(), lengthbuffer.size());
 
     if (written != lengthbuffer.size())
     {
@@ -140,7 +149,7 @@ void minecraft::Client::write_packet(const Packet& packet)
     }
 
     // writing packet data
-    written = (int)m_connector.write_n(buffer.data(), (int)buffer.size());
+    written = (int)conn->write_n(buffer.data(), (int)buffer.size());
     if (written != buffer.size())
     {
         LOG(ERROR)
@@ -156,7 +165,7 @@ void minecraft::Client::read_packet()
     // reading header for packet length
     varint incoming_packet_len([this] {
         uint8_t b;
-        int read = (int)m_connector.read_n(&b, 1);
+        int read = (int)conn->read_n(&b, 1);
         if (read != 1)
         {
             LOG(ERROR) << "Could not read byte from socket for varint.";
@@ -168,7 +177,7 @@ void minecraft::Client::read_packet()
     // reading packet to raw buffer
     safebytebuffer buf;
     buf.reserve(incoming_packet_len.val());
-    int recvd = (int)m_connector.read_n(buf.data(), incoming_packet_len.val());
+    int recvd = (int)conn->read_n(buf.data(), incoming_packet_len.val());
     buf.push_buffer(buf.data(), incoming_packet_len.val());
     VLOG(VLOG_DEBUG) << "Read packet data in " << incoming_packet_len.val() << " bytes";
 
