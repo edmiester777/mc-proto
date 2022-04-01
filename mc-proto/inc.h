@@ -30,7 +30,7 @@
 #include "bitset.h"
 #include "minecraft/entitytypes.h"
 
-#if WIN32
+#if defined(WIN32) || defined(MSVC) || defined(_MSC_VER)
 
 #include <WinSock2.h>
 
